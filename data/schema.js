@@ -56,11 +56,22 @@ const advancedSearchType = new GraphQLObjectType({
 	})
 })
 
+const questionIDType = new GraphQLObjectType({
+	name: "questionID",
+	description: 'search for a question by its ID',
+	fields: () => ({
+		items: { type: new GraphQLList(itemType) },
+		has_more: {type: GraphQLBoolean},
+		quota_max: {type: GraphQLInt},
+		quota_remaining: {type: GraphQLInt}
+	})
+})
+
 const QueryType = new GraphQLObjectType({
 	name:'query',
 	description: 'advanced search result json',
 	fields: () => ({
-		result : {
+		advancedSearch : {
 			type: advancedSearchType,
 			args:{
 				q: {
@@ -79,6 +90,26 @@ const QueryType = new GraphQLObjectType({
 				},
 			},
 			resolve:(_, args) => stackExchange(args, "advancedSearch")
+		},
+		questionID : {
+			type: questionIDType,
+			args:{
+				ids: {
+					type: GraphQLInt,
+					description: "question ID"
+				},
+				sort:{
+					type: GraphQLString,
+					description: "How to sort the result",
+					defaultValue: "activity"
+				},
+				order:{
+					type: GraphQLString,
+					description: "Order of the result",
+					defaultValue: "desc"
+				},
+			},
+			resolve:(_, args) => stackExchange(args, "questionID")
 		}
 	})
 })

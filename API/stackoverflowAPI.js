@@ -7,10 +7,13 @@ function stackExchange(args, fname){
   return new Promise((resolve, reject) =>{
     console.log("In StackExchange API, switch functionality now");
     console.log(fname);
-    var queryUrl = null;
+    var queryUrl = 'https://api.stackexchange.com/2.2/';
     switch(fname){
         case "advancedSearch":
-            queryUrl = advancedSearch(args);
+            queryUrl = advancedSearch(args, queryUrl);
+            break;
+        case "questionID":
+            queryUrl = questionID(args, queryUrl);
             break;
     }     
     console.log(queryUrl);
@@ -40,9 +43,20 @@ function stackExchange(args, fname){
   });
 }
 
-function advancedSearch(args){
-    var queryUrl = 'https://api.stackexchange.com/2.2/search/advanced?site=stackoverflow';
+function advancedSearch(args, queryUrl){
+    queryUrl += "search/advanced?site=stackoverflow";
     for(var key in args){
+        queryUrl += '&' + key + '=' + encodeURIComponent(args[key]);
+    }
+    console.log(queryUrl);
+    return queryUrl
+}
+
+function questionID(args, queryUrl){
+    queryUrl += "questions/"+args.ids+"?site=stackoverflow";
+    for(var key in args){
+        if(key == "ids")
+            continue;
         queryUrl += '&' + key + '=' + encodeURIComponent(args[key]);
     }
     console.log(queryUrl);
