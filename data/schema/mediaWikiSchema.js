@@ -36,7 +36,7 @@ const pagesType = new GraphQLObjectType({
 	name: "pages",
 	description: 'wikiPageContent pages structure',
 	fields: () => ({
-		pages: {type: pageIDType},
+		pageID: {type: pageIDType},
 	})
 })
 

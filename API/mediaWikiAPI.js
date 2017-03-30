@@ -26,7 +26,8 @@ function mediaWiki(args, fname){
             
             if(response) {
                 console.log("send response data back")
-                resolve(JSON.parse(response)); 
+                console.log(response.body)
+                resolve(JSON.parse(response.body)); 
             }
         });
     });

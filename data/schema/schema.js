@@ -12,12 +12,22 @@ var {
 	mediaWikiQueryType
 } = require('./mediaWikiSchema.js');
 
+function wrapper(){
+	return {}
+}
+
 const Query = new GraphQLObjectType({
 	name: "Query",
 	description: 'all api query type',
 	fields: () => ({
-		stackExchange: {type: stackExchangeQueryType},
-		mediaWiki: {type: mediaWikiQueryType}
+		stackExchange: {
+			type: stackExchangeQueryType,
+			resolve:() => wrapper()
+		},
+		mediaWiki: {
+			type: mediaWikiQueryType,
+			resolve:() => wrapper()
+		}
 	})
 })
 
