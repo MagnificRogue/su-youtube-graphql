@@ -5,7 +5,7 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var graphqlHTTP = require('express-graphql');
-var schema = require('./data/schema.js')
+var schema = require('./data/schema/schema.js')
 var index = require('./routes/index');
 var users = require('./routes/users');
 

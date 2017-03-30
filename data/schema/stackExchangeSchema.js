@@ -9,9 +9,7 @@ var {
 
 var {
 	stackExchange
-} = require('./../API/stackoverflowAPI');
-
-var GRAPHQLError = require('graphql/error');
+} = require('./../../API/stackExchangeAPI');
 
 const ownerType = new GraphQLObjectType({
 	name: 'owner',
@@ -67,8 +65,8 @@ const questionIDType = new GraphQLObjectType({
 	})
 })
 
-const QueryType = new GraphQLObjectType({
-	name:'query',
+const stackExchangeQueryType = new GraphQLObjectType({
+	name:'stackExchangeQuery',
 	description: 'advanced search result json',
 	fields: () => ({
 		advancedSearch : {
@@ -114,6 +112,7 @@ const QueryType = new GraphQLObjectType({
 	})
 })
 
-module.exports = new GraphQLSchema({
-	query: QueryType,
-})
+module.exports = {
+	stackExchangeQueryType
+}
+

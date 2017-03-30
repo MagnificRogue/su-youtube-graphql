@@ -1,7 +1,6 @@
 var Promise = require('promise');
 var zlib = require('zlib');
 var http = require("https");
-var url = require('url');
 
 function stackExchange(args, fname){
   return new Promise((resolve, reject) =>{
@@ -29,7 +28,7 @@ function stackExchange(args, fname){
             buffer.push(data.toString())
         }).on("end", function () {
             // response and decompression complete, join the buffer and return
-            console.log("send response data back")
+            console.log("send response data back");
             var data = JSON.parse(buffer.join(""));
             resolve(data);
         }).on("error", function (e) {
@@ -66,3 +65,4 @@ function questionID(args, queryUrl){
 module.exports = {
   stackExchange
 }
+
