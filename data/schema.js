@@ -8,7 +8,7 @@ var {
 } = require('graphql');
 
 var {
-	searchAdvanced
+	stackExchange
 } = require('./../API/stackoverflowAPI');
 
 var GRAPHQLError = require('graphql/error');
@@ -66,9 +66,19 @@ const QueryType = new GraphQLObjectType({
 				q: {
 					type: GraphQLString,
 					description: "The question to search"
-				}
+				},
+				sort:{
+					type: GraphQLString,
+					description: "How to sort the result",
+					defaultValue: "activity"
+				},
+				order:{
+					type: GraphQLString,
+					description: "Order of the result",
+					defaultValue: "desc"
+				},
 			},
-			resolve:(_, args) => searchAdvanced(args)
+			resolve:(_, args) => stackExchange(args, "advancedSearch")
 		}
 	})
 })
