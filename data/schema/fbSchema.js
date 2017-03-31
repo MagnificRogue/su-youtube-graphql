@@ -6,7 +6,7 @@ var {
 	GraphQLInt,
 	GraphQLFloat
 } = require('graphql');
-var search = require('../API/fbAPI').search;
+var search = require('../../API/fbAPI').search;
 
 const fbQueryType =  new GraphQLObjectType({
 	name:'fbQuery',

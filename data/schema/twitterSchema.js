@@ -10,7 +10,7 @@ var {
 	searchTweet,
 	searchUser,
 	searchGeo
-} = require('../API/twitterAPI');
+} = require('./../../API/twitterAPI');
 
 // root
 const twitterQueryType = module.exports = new GraphQLObjectType({

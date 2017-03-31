@@ -6,7 +6,7 @@ var {
 	GraphQLInt
 } = require('graphql');
 
-var fetchRetweet = require('../../API/twitterAPI').fetchRetweet;
+var fetchRetweet = require('../../../API/twitterAPI').fetchRetweet;
 
 const tweetType = module.exports = new GraphQLObjectType({
 	name: 'tweet',

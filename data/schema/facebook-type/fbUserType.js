@@ -6,8 +6,8 @@ var {
 	GraphQLInt,
 	GraphQLFloat
 } = require('graphql');
-var getField = require('../../API/fbAPI').getField;
-var getEdge = require('../../API/fbAPI').getEdge;
+var getField = require('../../../API/fbAPI').getField;
+var getEdge = require('../../../API/fbAPI').getEdge;
 
 const userType = module.exports = new GraphQLObjectType({
 	name: 'fbUser',

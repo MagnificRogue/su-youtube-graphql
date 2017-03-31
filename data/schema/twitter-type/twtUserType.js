@@ -10,7 +10,7 @@ var {
 	fetchTimeline,
 	fetchFollower,
 	fetchFriend
-} = require('../../API/twitterAPI');
+} = require('../../../API/twitterAPI');
 
 const userType = module.exports = new GraphQLObjectType({
 	name: 'user',

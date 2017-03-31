@@ -5,8 +5,8 @@ var {
 	GraphQLInt,
 	GraphQLFloat
 } = require('graphql');
-var getField = require('../../API/fbAPI').getField;
-var getEdge = require('../../API/fbAPI').getEdge;
+var getField = require('../../../API/fbAPI').getField;
+var getEdge = require('../../../API/fbAPI').getEdge;
 
 const pageType = module.exports = new GraphQLObjectType({
 	name:'page',
