@@ -8,7 +8,6 @@ var graphqlHTTP = require('express-graphql');
 var schema = require('./data/schema/schema.js')
 var index = require('./routes/index');
 var users = require('./routes/users');
-var mongoose = require('mongoose');
 
 var app = express();
 
@@ -50,41 +49,10 @@ app.use(function(err, req, res, next) {
 });
 
 
-//connect to the mongodb database
-mongoose.connect('mongodb://localhost/graphql');
 
-//check connection successful or not
-var db = mongoose.connection;
-db.on('error', console.error.bind(console, 'mongodb connection error:'));
-db.once('open', function() {
-  console.log("successfully connect to mongodb");
-});
-
-var kittySchema = mongoose.Schema({
-    name: String
-});
-var Kitten = mongoose.model('Kitten', kittySchema);
-var silence = new Kitten({ name: 'Silence' });
-console.log(silence.name); // 'Silence'
-var fluffy = new Kitten({ name: 'fluffy' });
-fluffy.save(function (err) {
-  if (err) return console.error(err);
-  console.log("successfully store");
-});
-
-silence .save(function (err) {
-  if (err) return console.error(err);
-  console.log("successfully store");
-});
-
-Kitten.find(function (err, kittens) {
-  if (err) return console.error(err);
-  console.log(kittens);
-})
 
 module.exports = {
-  app, 
-  mongoose
+  app
 };
 
 
