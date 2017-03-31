@@ -65,4 +65,3 @@ function questionID(args, queryUrl){
 module.exports = {
   stackExchange
 }
-
