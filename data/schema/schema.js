@@ -16,6 +16,10 @@ function wrapper(){
 	return {}
 }
 
+const testQuery = new GraphQLObjectType({
+	
+})
+
 const Query = new GraphQLObjectType({
 	name: "Query",
 	description: 'all api query type',
