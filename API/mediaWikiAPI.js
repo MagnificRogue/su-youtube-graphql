@@ -45,3 +45,4 @@ function wikiPageContent(args, queryUrl){
 module.exports = {
   mediaWiki
 }
+

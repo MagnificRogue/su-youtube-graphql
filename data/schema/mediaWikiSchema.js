@@ -74,4 +74,7 @@ const mediaWikiQueryType = new GraphQLObjectType({
 	})
 })
 
-module.exports = mediaWikiQueryType;
+module.exports = {
+	mediaWikiQueryType
+}
+
