@@ -159,12 +159,15 @@ const pageType = module.exports = new GraphQLObjectType({
 		locations:				{ type: new GraphQLList(locationType),
 									resolve: ({id}) => getEdge({id},'locations')},
 		likes:					{ type: new GraphQLList(likeType),
-									resolve: ({id}) => getEdge({id},'likes')}
-		/*feed:					{},	
-		picture:				{},
-		posts:					{},
-		tagged:					{},
-		videos:					{}*/
+									resolve: ({id}) => getEdge({id},'likes')},
+		videos:					{ type: new GraphQLList(videoType),
+									resolve: ({id}) => getEdge({id},'videos')},
+		feed:					{ type: new GraphQLList(postType),
+									resolve: ({id}) => getEdge({id},'feed')},	
+		picture:				{ type: profilePictureType,
+									resolve: ({id}) => getEdge({id},'picture')},									
+		tagged:					{ type: new GraphQLList(postType),
+									resolve: ({id}) => getEdge({id},'tagged')}
 	})
 });
 
@@ -227,4 +230,7 @@ const albumType = require('./fbAlbumType');
 const photoType = require('./fbPhotoType');
 const eventType = require('./fbEventType');
 const locationType = require('./fbLocationType');
+const postType = require('./fbPostType');
 const likeType = require('./fbLikeType');
+const videoType = require('./fbVideoType');
+const profilePictureType = require('./fbProfilePicType');

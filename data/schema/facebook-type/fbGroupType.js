@@ -41,9 +41,11 @@ const groupType = module.exports = new GraphQLObjectType({
 		members:				{ type: new GraphQLList(userType),
 									resolve: ({id}) => getEdge({id},'members')},
 		photos:					{ type: new GraphQLList(photoType),
-									resolve: ({id}) => getEdge({id},'photos')}
-		//feed:	
-		//videos:
+									resolve: ({id}) => getEdge({id},'photos')},
+		feed:					{ type: new GraphQLList(postType),
+									resolve: ({id}) => getEdge({id},'feed')},
+		videos:					{ type: new GraphQLList(videoType),
+									resolve: ({id}) => getEdge({id},'videos')}
 	})
 });
 
@@ -53,3 +55,5 @@ const pageType = require('./fbPageType');
 const photoType = require('./fbPhotoType');
 const albumType = require('./fbAlbumType');
 const eventType = require('./fbEventType');
+const postType = require('./fbPostType');
+const videoType = require('./fbVideoType');

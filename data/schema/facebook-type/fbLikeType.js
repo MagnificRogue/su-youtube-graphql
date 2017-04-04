@@ -15,6 +15,13 @@ const likeType = module.exports = new GraphQLObjectType({
 	fields: ()=>({
 		name: 	{ type: GraphQLString },
 		id:		{ type: GraphQLString }
+		
+		/*An array of User or Page objects representing the 
+		people or Pages that liked the object, 
+		in addition to the following field:
+		total_count: Total number of people who liked. 
+		This is only returned when the flag summary=true is set.int32*/
+
 	})
 });
 

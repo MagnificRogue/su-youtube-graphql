@@ -64,12 +64,13 @@ const eventType = module.exports = new GraphQLObjectType({
 		noreply:			{ type: new GraphQLList(userType),
 								resolve: ({id}) => getEdge({id},'noreply')},
 		photos:				{ type: new GraphQLList(photoType),
-								resolve: ({id}) => getEdge({id},'photos')}
-		//pictures:			{ type: }
-		//videos:
-		//feed:
-		
-		
+								resolve: ({id}) => getEdge({id},'photos')},
+		picture:			{ type: profilePictureType,
+									resolve: ({id}) => getEdge({id},'picture')},
+		videos:				{ type: new GraphQLList(videoType),
+								resolve: ({id}) => getEdge({id},'videos')},
+		feed:				{ type: new GraphQLList(postType),
+								resolve: ({id}) => getEdge({id},'feed')}		
 	})
 });
 
@@ -79,3 +80,6 @@ const groupType = require('./fbGroupType');
 const userType = require('./fbUserType');
 const photoType = require('./fbPhotoType');
 const commentType = require('./fbCommentType');
+const videoType = require('./fbVideoType');
+const postType = require('./fbPostType');
+const profilePictureType = require('./fbProfilePicType');

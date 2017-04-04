@@ -49,9 +49,14 @@ const photoType = module.exports = new GraphQLObjectType({
 		place:			{ type: placeType,
 							resolve: ({id}) => getField({id},'place')},
 		/*-------------------------- edges ---------------------------------- */
-		//reactions:
-		//shareposts:
-		//tags:
+		reactions:		{ type: new GraphQLList(reactionType),
+								resolve: ({id}) => getEdge({id},'reactions')},
+		sharedposts:	{ type: new GraphQLList(postType),
+								resolve: ({id}) => getEdge({id},'sharedposts')},
+		sponsor_tags:	{ type: new GraphQLList(pageType),
+								resolve: ({id}) => getEdge({id},'sponsor_tags')},
+		tags:			{ type: new GraphQLList(taggableSubjectType),
+								resolve: ({id}) => getEdge({id},'tags')},
 		likes:			{ type: new GraphQLList(likeType),
 								resolve: ({id}) => getEdge({id},'likes')},
 		comments:		{ type: new GraphQLList(commentType),
@@ -69,7 +74,18 @@ const platformImageSourceType = new GraphQLObjectType({
 		source:	{ type: GraphQLString}
 	})
 });
-		
+const taggableSubjectType = new GraphQLObjectType({
+	name:'taggableSubject',
+	description:'Represents an object can be tagged in some content',
+	fields:()=>({
+		id:				{type:GraphQLString},
+		name:			{type:GraphQLString},
+		created_time:	{type:GraphQLString},
+		x:				{type:GraphQLFloat},
+		y:				{type:GraphQLFloat},
+	})
+	
+});
 const entityAtTextRangeType = require('./fbEntityAtTextRangeType');		
 const albumType = require('./fbAlbumType');
 const userType = require('./fbUserType');
@@ -77,8 +93,10 @@ const eventType = require('./fbEventType');
 const placeType = require('./fbPlaceType');
 const commentType = require('./fbCommentType');
 const likeType = require('./fbLikeType');
+const reactionType = require('./fbReactionType');
+const postType = require('./fbPostType');
+const pageType = require('./fbPageType');
 
-		
 		
 		
 		

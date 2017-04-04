@@ -36,13 +36,12 @@ const fbQueryType =  new GraphQLObjectType({
 			type: new GraphQLList(groupType),
 			args:{ q: { type:GraphQLString } },
 			resolve: (_,args) => search(args,'group')
-		}
-		/*
-		queryPlacetopic{
-			type: new GraphQLList(placetopicType),
+		},
+		queryPlaceTopic:{
+			type: new GraphQLList(placeTopicType),
 			args:{ q: { type:GraphQLString } },
-			resolve: (_,args) => searchPlacetopic(args)
-		}*/
+			resolve: (_,args) => search(args,'placetopic')
+		}
 	})
 });
 
@@ -51,5 +50,6 @@ const pageType = require('./facebook-type/fbPageType');
 const eventType = require('./facebook-type/fbEventType');
 const placeType = require('./facebook-type/fbPlaceType');
 const groupType = require('./facebook-type/fbGroupType');
+const placeTopicType = require('./facebook-type/fbPlaceTopicType');
 
 module.exports = fbQueryType;

@@ -18,7 +18,7 @@ const commentType = module.exports = new GraphQLObjectType({
 	fields: ()=>({
 		/*-----------------------------------fields------------------------------*/
 		id:				{ type: GraphQLString},
-		attachment:		{ type: storyAttachmentType,
+		attachment:		{ type: attachmentType,
 							resolve: ({id}) => getField({id},'attachment')},
 		comment_count:	{ type: GraphQLInt,
 							resolve: ({id}) => getField({id},'comment_count')},
@@ -40,18 +40,7 @@ const commentType = module.exports = new GraphQLObjectType({
 	})
 });
 
-const storyAttachmentType = new GraphQLObjectType({
-	name:'storyAttachment',
-	description:`Link or photo attached to the comment`,
-	fields: ()=>({
-		description:		{ type: GraphQLString},
-		description_tags:	{ type: new GraphQLList(entityAtTextRangeType) },
-		title:				{ type: GraphQLString},
-		type:				{ type: GraphQLString},
-		url:				{ type: GraphQLString}
-	})
-})
-
 const userType = require('./fbUserType');
 const entityAtTextRangeType = require('./fbEntityAtTextRangeType');
 const likeType = require('./fbLikeType');
+const attachmentType = require('./fbAttachmentType');

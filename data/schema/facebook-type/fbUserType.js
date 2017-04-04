@@ -102,11 +102,13 @@ const userType = module.exports = new GraphQLObjectType({
 		friends:				{ type: new GraphQLList(userType),
 									resolve: ({id}) => getEdge({id},'friends')},
 		likes:					{ type: new GraphQLList(likeType),
-									resolve: ({id}) => getEdge({id},'likes')}
-		/*	
-		picture:	{},
-		videos:	{},
-		feed:	{},*/
+									resolve: ({id}) => getEdge({id},'likes')},
+		videos:					{ type: new GraphQLList(videoType),
+									resolve: ({id}) => getEdge({id},'videos')},
+		feed:					{ type: new GraphQLList(postType),
+									resolve: ({id}) => getEdge({id},'feed')},
+		picture:				{ type: profilePictureType,
+									resolve: ({id}) => getEdge({id},'picture')}
 	})
 });
 
@@ -163,3 +165,6 @@ const coverPhotoType = require('./fbCoverPhotoType');
 const locationType = require('./fbLocationType');
 const groupType = require('./fbGroupType');
 const likeType = require('./fbLikeType');
+const videoType = require('./fbVideoType');
+const postType = require('./fbPostType');
+const profilePictureType = require('./fbProfilePicType');

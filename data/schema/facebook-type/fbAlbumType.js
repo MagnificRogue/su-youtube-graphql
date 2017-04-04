@@ -40,13 +40,14 @@ const albumType = module.exports = new GraphQLObjectType({
 		event:			{ type: eventType,
 							resolve: ({id}) => getField({id},'event')},
 		/*-------------------------- edges ---------------------------------- */
-		//picture:
 		photos:			{ type: new GraphQLList(photoType),
 							resolve: ({id}) => getEdge({id},'photos')},
-		//shareposts:
+		sharedposts:	{ type: new GraphQLList(postType),
+							resolve: ({id}) => getEdge({id},'sharedposts')},
 		likes:			{ type: new GraphQLList(likeType),
 							resolve: ({id}) => getEdge({id},'likes')},
-		//reactions:
+		reactions:		{ type: new GraphQLList(reactionType),
+							resolve: ({id}) => getEdge({id},'reactions')},
 		comments:		{ type: new GraphQLList(commentType),
 							resolve: ({id}) => getEdge({id},'comments')}
 	})
@@ -58,4 +59,6 @@ const photoType = require('./fbPhotoType');
 const eventType = require('./fbEventType');
 const commentType = require('./fbCommentType');
 const likeType = require('./fbLikeType');
+const reactionType = require('./fbReactionType');
+const postType = require('./fbPostType');
 		
