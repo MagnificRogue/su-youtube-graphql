@@ -8,6 +8,7 @@ const twitterQueryType = require('./twitterSchema');
 const fbQueryType = require('./fbSchema');
 const stackExchangeQueryType = require('./stackExchangeSchema');
 const mediaWikiQueryType = require('./mediaWikiSchema');
+const flickrQueryType = require('./flickrSchema');
 
 function wrapper(){
 	return {}
@@ -17,14 +18,18 @@ const Query = new GraphQLObjectType({
   name   : 'Query',
   description : 'all api query type',
   fields : () =>({
-	  twitter:{
-				type:twitterQueryType,
-				resolve: () => wrapper()
-				},
-	  facebook:{
-				type:fbQueryType,
-				resolve: () => wrapper()
-				},
+		twitter:{
+			type:twitterQueryType,
+			resolve: () => wrapper()
+			},
+		facebook:{
+			type:fbQueryType,
+			resolve: () => wrapper()
+			},
+		flickr:{
+			type: flickrQueryType,
+			resolve:() => wrapper()
+			},
 		stackExchange: {
 				type: stackExchangeQueryType,
 				resolve:() => wrapper()
@@ -40,3 +45,4 @@ const Query = new GraphQLObjectType({
 module.exports = new GraphQLSchema({
 	query:Query
 });
+
