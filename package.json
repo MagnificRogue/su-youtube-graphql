@@ -15,7 +15,6 @@
     "form-data": "^2.1.2",
     "generate-schema": "^2.3.3",
     "graphql": "^0.9.1",
-    "instagram-node": "^0.5.8",
     "mongoose": "^4.9.2",
     "morgan": "~1.7.0",
     "node-fetch": "^1.6.3",

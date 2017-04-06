@@ -15,10 +15,6 @@ var {
 	mediaWikiQueryType
 } = require('./mediaWikiSchema.js');
 
-var {
-	instagramQueryType
-} = require('./instagramSchema.js');
-
 function wrapper(){
 	return {}
 }
@@ -80,10 +76,6 @@ const Query = new GraphQLObjectType({
 		},
 		mediaWiki: {
 			type: mediaWikiQueryType,
-			resolve:() => wrapper()
-		},
-		instagram: {
-			type: instagramQueryType,
 			resolve:() => wrapper()
 		},
 		dbTest: {
