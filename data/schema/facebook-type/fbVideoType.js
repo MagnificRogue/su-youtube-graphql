@@ -31,7 +31,7 @@ const videoType = module.exports = new GraphQLObjectType({
 		format:						{type: new GraphQLList(videoFormatType),
 										resolve: ({id}) => getField({id},'format')},
 		from:						{// profile
-										type:userType,
+										type:profileType,
 										resolve: ({id}) => getField({id},'from')},
 		icon:						{type:GraphQLString,
 										resolve: ({id}) => getField({id},'icon')},
@@ -108,3 +108,6 @@ const reactionType = require('./fbReactionType');
 const postType = require('./fbPostType');
 const pageType = require('./fbPageType');
 const thumnailType = require('./fbThumbnailType');
+const profileType = require('./fbProfileType');
+//console.log(profileType);
+

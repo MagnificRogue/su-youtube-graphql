@@ -31,7 +31,7 @@ const albumType = module.exports = new GraphQLObjectType({
 							resolve: ({id}) => getField({id},'type')},
 		updated_time: 	{ type: GraphQLString,
 							resolve: ({id}) => getField({id},'updated_time')},
-		from:			{ type: userType,
+		from:			{ type: profileType,
 							resolve: ({id}) => getField({id},'from')},
 		place:			{ type: pageType,
 							resolve: ({id}) => getField({id},'place')},
@@ -53,6 +53,7 @@ const albumType = module.exports = new GraphQLObjectType({
 	})
 });
 
+const profileType = require('./fbProfileType');
 const userType = require('./fbUserType');
 const pageType = require('./fbPageType');
 const photoType = require('./fbPhotoType');

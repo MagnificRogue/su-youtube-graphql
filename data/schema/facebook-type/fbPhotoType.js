@@ -42,7 +42,7 @@ const photoType = module.exports = new GraphQLObjectType({
 							resolve: ({id}) => getField({id},'webp_images')},	
 		album: 			{ type: albumType,
 							resolve: ({id}) => getField({id},'album')},
-		from:			{ type: userType,
+		from:			{ type: profileType,
 							resolve: ({id}) => getField({id},'from')},
 		event: 			{ type: eventType,
 							resovle: ({id}) => getField({id},'event')},
@@ -96,6 +96,7 @@ const likeType = require('./fbLikeType');
 const reactionType = require('./fbReactionType');
 const postType = require('./fbPostType');
 const pageType = require('./fbPageType');
+const profileType = require('./fbProfileType');
 
 		
 		

@@ -168,3 +168,4 @@ const likeType = require('./fbLikeType');
 const videoType = require('./fbVideoType');
 const postType = require('./fbPostType');
 const profilePictureType = require('./fbProfilePicType');
+

@@ -21,7 +21,7 @@ const postType = module.exports = new GraphQLObjectType({
 							resolve: ({id}) => getField({id},'created_time')},
 		description:	{type:GraphQLString,
 							resolve: ({id}) => getField({id},'description')},
-		from:			{type:userType,
+		from:			{type:profileType,
 							resolve: ({id}) => getField({id},'from')},
 		icon:			{type:GraphQLString,
 							resolve: ({id}) => getField({id},'icon')},
@@ -49,7 +49,7 @@ const postType = module.exports = new GraphQLObjectType({
 							resolve: ({id}) => getField({id},'status_type')},
 		story:			{type:GraphQLString,
 							resolve: ({id}) => getField({id},'story')},
-		to:				{type:new GraphQLList(userType),
+		to:				{type:new GraphQLList(profileType),
 							resolve: ({id}) => getField({id},'to')},
 		type:			{type:GraphQLString,
 							resolve: ({id}) => getField({id},'type')},
@@ -77,4 +77,5 @@ const likeType = require('./fbLikeType');
 const reactionType = require('./fbReactionType');
 const commentType = require('./fbCommentType');
 const attachmentType = require('./fbAttachmentType');
+const profileType = require('./fbProfileType');
 		

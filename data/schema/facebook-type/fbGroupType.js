@@ -25,8 +25,8 @@ const groupType = module.exports = new GraphQLObjectType({
 		member_request_count:	{ type: GraphQLInt,
 									resolve: ({id}) => getField({id},'member_request_count')},
 		name:					{ type: GraphQLString},
-		//owner: 				{ type: userType|pageType},
-		//parent: 				{ type: groupType|pageType},
+		owner: 					{ type: profileType},
+		parent: 				{ type: profileType},
 		privacy: 				{ type: GraphQLString,
 									resolve: ({id}) => getField({id},'privacy')},
 		updated_time:			{ type: GraphQLString,
@@ -57,3 +57,4 @@ const albumType = require('./fbAlbumType');
 const eventType = require('./fbEventType');
 const postType = require('./fbPostType');
 const videoType = require('./fbVideoType');
+const profileType = require('./fbProfileType');

@@ -8,7 +8,7 @@ var {
 } = require('graphql');
 var search = require('../../API/fbAPI').search;
 
-const fbQueryType =  new GraphQLObjectType({
+const fbQueryType =  module.exports = new GraphQLObjectType({
 	name:'fbQuery',
 	description:'Query user, page, event, group, place, placetopic.',
 	fields: () => ({
@@ -52,4 +52,3 @@ const placeType = require('./facebook-type/fbPlaceType');
 const groupType = require('./facebook-type/fbGroupType');
 const placeTopicType = require('./facebook-type/fbPlaceTopicType');
 
-module.exports = fbQueryType;

@@ -24,7 +24,7 @@ const commentType = module.exports = new GraphQLObjectType({
 							resolve: ({id}) => getField({id},'comment_count')},
 		created_time:	{ type: GraphQLString,
 							resolve: ({id}) => getField({id},'created_time')},
-		from:			{ type: userType,
+		from:			{ type: profileType,
 							resolve: ({id}) => getField({id},'from')},
 		like_count:		{ type: GraphQLInt,
 							resolve: ({id}) => getField({id},'like_count')},
@@ -40,7 +40,7 @@ const commentType = module.exports = new GraphQLObjectType({
 	})
 });
 
-const userType = require('./fbUserType');
+const profileType = require('./fbProfileType');
 const entityAtTextRangeType = require('./fbEntityAtTextRangeType');
 const likeType = require('./fbLikeType');
 const attachmentType = require('./fbAttachmentType');

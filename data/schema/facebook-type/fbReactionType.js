@@ -15,7 +15,8 @@ const reactionType = module.exports = new GraphQLObjectType({
 	fields: () => ({
 		id: {type: GraphQLString},
 		name: {type: GraphQLString},
-		type: {type: GraphQLString}
+		type: {type: GraphQLString},
+		
 		
 		/* a list of profile node: User,Page,Group,Event,Application
 		can be keep working on
