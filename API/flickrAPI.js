@@ -64,6 +64,7 @@ function flickrAPI(endpoint,addon,args,resolveName){
 					case 'photosInGallery':
 					case 'gallery':
 					case 'galleriesOf':
+						//console.log(JSON.stringify(result));
 						resolve(result.galleries.gallery);
 						break;
 						
@@ -92,10 +93,12 @@ function flickrAPI(endpoint,addon,args,resolveName){
 						break;
 					
 					case 'personInfo':
+						//console.log(result.person);
 						resolve(result.person);
 						break;
 					
 					case 'tree':
+						//console.log(JSON.stringify(result));
 						resolve(result.collections.collection);
 						break;
 					
@@ -116,15 +119,17 @@ function flickrAPI(endpoint,addon,args,resolveName){
 						resolve(result.photo.exif);
 						break;
 						
-					case 'favPeople':
+					case 'favoritePeople':
+						//console.log(JSON.stringify(result));
 						resolve(result.photo.person);
 						break;
 					
 					case 'people':
+						//console.log(JSON.stringify(result));
 						resolve(result.people.person);
 						break;
 					
-					case 'hotoInfo':
+					case 'photoInfo':
 						resolve(result.photo);
 						break;
 					
@@ -137,9 +142,11 @@ function flickrAPI(endpoint,addon,args,resolveName){
 						break;
 									
 					default:
-						console.log('sorry we can\'t find matching resolve type');}						
+						console.log('sorry we can\'t find matching resolve type:' + resolveName);
+						resolve(null);
+						}						
 			}
-		});	
+		});
 	});		
 }
 
