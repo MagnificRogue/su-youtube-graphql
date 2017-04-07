@@ -18,10 +18,10 @@ const flickrTagType = module.exports = new GraphQLObjectType({
 		score:		{type:GraphQLString},
 		_content:	{type:GraphQLString},
 		tagClusters:	{type:new GraphQLList(flickrClusterType),
-						resolve:({_content})=>flickrClusters(endpoint="tags.getClusters",addon={"tag":_content},args={},resolveName='tagClusters')},
+						resolve:({_content})=>flickrAPI(endpoint="tags.getClusters",addon={"tag":_content},args={},resolveName='tagClusters')},
 		
 		relatedTags:	{type: new GraphQLList(flickrTagType),
-						resolve:({_content})=>flickrClusters(endpoint="tags.getRelated",addon={"tag":_content},args={},resolveName='relatedTags')},
+						resolve:({_content})=>flickrAPI(endpoint="tags.getRelated",addon={"tag":_content},args={},resolveName='relatedTags')},
 	})
 });
 

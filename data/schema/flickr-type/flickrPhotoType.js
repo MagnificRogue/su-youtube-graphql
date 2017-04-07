@@ -33,7 +33,7 @@ const flickrPhotoType = module.exports = new GraphQLObjectType({
 						resolve:({id}) => flickrAPI(endpoint="photos.getExif",addon={"photo_id": id},args={},resolveName="exif")},
 						
 		favoritePeople:	{type:new GraphQLList(flickrPersonType),
-						resolve:({id}) => flickrAPI(endpoint="photos.getFavorites",addon={"photo_id": id},args={},resolveName="favPeople")},
+						resolve:({id}) => flickrAPI(endpoint="photos.getFavorites",addon={"photo_id": id},args={},resolveName="favoritePeople")},
 						
 		people:		{type:new GraphQLList(flickrPersonType),
 						resolve:({id}) => flickrAPI(endpoint="photos.people.getList",addon={"photo_id": id},args={},resolveName="people")},
@@ -60,7 +60,7 @@ const flickrPhotoType = module.exports = new GraphQLObjectType({
 		locations:	{type: flickrLocationType,
 						resolve:({id}) => flickrAPI(endpoint="photos.geo.getLocation", addon={"photo_id":id},args={},resolveName="locations")},
 						
-		gallariesOf:		{type: new GraphQLList(flickrGalleryType),
+		galleriesOf:		{type: new GraphQLList(flickrGalleryType),
 							description:'Return the list of galleries to which a photo has been added. Galleries are returned sorted by date which the photo was added to the gallery.',
 							args: {
 							page: 		{type:GraphQLInt, defaultvalue:1},
@@ -156,7 +156,7 @@ const flickrExifType = new GraphQLObjectType({
 		tagspaceid:	{type:GraphQLInt},
 		tag:		{type:GraphQLString},
 		label:		{type:GraphQLString},
-		raw: 		{type:GraphQLInt,
+		raw: 		{type:GraphQLString,
 						resolve:({raw}) => { return raw._content }}
 	})
 });
