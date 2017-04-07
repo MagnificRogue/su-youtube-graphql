@@ -31,6 +31,18 @@ function instagram(args, fname){
             case "usersRelationship":
                 queryUrl = usersRelationship(args, queryUrl);
                 break;
+            case "mediaID":
+                queryUrl = mediaID(args, queryUrl);
+                break;
+            case "mediaShortCode":
+                queryUrl = mediaShortCode(args, queryUrl);
+                break;
+            case "mediaSearch":
+                queryUrl = mediaSearch(args, queryUrl);
+                break;
+            case "comments":
+                queryUrl = comments(args, queryUrl);
+                break;
         }     
 
         var options = {
@@ -46,7 +58,6 @@ function instagram(args, fname){
             
             if(response) {
                 console.log("send response data back")
-                console.log(response.body)
                 resolve(JSON.parse(response.body)); 
             }
         });
@@ -98,6 +109,29 @@ function usersRelationship(args, queryUrl){
     return queryUrl
 }
 
+function mediaID(args, queryUrl){
+    queryUrl += ('/media/' + args.media_id + "?access_token=" + access_token);
+    console.log(queryUrl);
+    return queryUrl
+}
+
+function mediaShortCode(args, queryUrl){
+    queryUrl += ('/media/' + args.shortcode + "/D?access_token=" + access_token);
+    console.log(queryUrl);
+    return queryUrl
+}
+
+function mediaSearch(args, queryUrl){
+    queryUrl += ('/media/search?lat=' + args.lat + "&lng=" + args.lng + "&access_token=" + access_token);
+    console.log(queryUrl);
+    return queryUrl
+}
+
+function comments(args, queryUrl){
+    queryUrl += ('/media/' + args.media_id + "/comments?access_token=" + access_token);
+    console.log(queryUrl);
+    return queryUrl
+}
 
 module.exports = {
   instagram

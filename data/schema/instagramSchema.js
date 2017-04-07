@@ -24,6 +24,16 @@ var {
 	usersRelationshipType,
 } = require('./instagramSchema/relationshipsSchema');
 
+var {
+	mediaIDType,
+	mediaShortCodeType,
+	mediaSearchType
+} = require('./instagramSchema/mediaSchema.js');
+
+var {
+	commentsType
+} = require('./instagramSchema/commentsSchema.js');
+
 const instagramQueryType = new GraphQLObjectType({
 	name: 'instagramQuery',
 	description: 'instagram api call',
@@ -77,6 +87,50 @@ const instagramQueryType = new GraphQLObjectType({
 				}
 			},
 			resolve:(_, args) => instagram(args, "usersRelationship")
+		},
+		mediaID:{
+			type: mediaIDType,
+			args:{
+				media_id: {
+					type: GraphQLString,
+					description: "Media ID"
+				}
+			},
+			resolve:(_, args) => instagram(args, "mediaID")
+		},
+		mediaShortCode:{
+			type: mediaShortCodeType,
+			args:{
+				shortcode: {
+					type: GraphQLString,
+					description: "Media Short Code"
+				}
+			},
+			resolve:(_, args) => instagram(args, "mediaShortCode")
+		},
+		mediaSearch:{
+			type: mediaSearchType,
+			args:{
+				lat: {
+					type: GraphQLString,
+					description: "Media Search Latitude"
+				},
+				lng: {
+					type: GraphQLString,
+					description: "Media Search Longitude"
+				}
+			},
+			resolve:(_, args) => instagram(args, "mediaSearch")
+		},
+		comments:{
+			type: commentsType,
+			args:{
+				media_id: {
+					type: GraphQLString,
+					description: "comments"
+				}
+			},
+			resolve:(_, args) => instagram(args, "comments")
 		},
 	})
 })

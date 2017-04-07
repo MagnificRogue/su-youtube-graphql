@@ -71,5 +71,6 @@ module.exports = {
 	usersSelfFollowedByType,
 	usersSelfRequestedByType,
 	usersRelationshipType,
+	followerInfoType,
 }
 

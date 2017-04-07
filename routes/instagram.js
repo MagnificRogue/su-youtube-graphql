@@ -7,7 +7,7 @@ var access_token = config.instagram.access_token_key;
 var client_id = config.instagram.client_id;
 var client_secret = config.instagram.client_secret;
 
-var queryUrl = 'https://api.instagram.com/v1/users/self/follows?access_token=' + access_token;
+var queryUrl = 'https://api.instagram.com/v1/users/self/media/recent/?access_token=' + access_token;
 var options = {
     method: 'GET',
     uri: queryUrl,
