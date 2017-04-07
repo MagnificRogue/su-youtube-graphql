@@ -10,561 +10,137 @@ var keys = {
 	  };
 var flickr = new Flickr(keys);
 
-function searchPhotos(args){
-	//console.log(args);
+function flickrAPI(endpoint,addon,args,resolveName){
+	Object.assign(args,addon);
 	return new Promise((resolve,reject) =>{
-		flickr.get("photos.search", args, function(err, result){
+		flickr.get(endpoint, args, function(err, result){
 			if (err) {
 				console.error(err);
 				reject(err);
 			}else{
-				//console.log(result.photos.photo);
-				resolve(result.photos.photo);
+				switch(resolveName){
+					case 'searchPhotos':
+					case 'recentPhotos':
+					case 'interestingPhotos':
+					case 'popular':
+					case 'photo':
+					case 'photoOf':
+					case 'favoritePhotos':
+						resolve(result.photos.photo);
+						break;
+						
+					case 'searchGroups':
+					case 'group':
+						resolve(result.groups.group);
+						break;
+						
+					case 'searchPlaces':
+					case 'boundingBox':
+					case 'topPlaces':
+						resolve(result.places.place);
+						break;
+						
+					case'searchUsers':
+						resolve(result.user);
+						break;
+					
+					case 'hotTags':
+						resolve(result.hottags.tag);
+						break;
+						
+					case 'photosInSet':
+						resolve(result.photoset.photo);
+						break;
+						
+					case 'photoset':
+						resolve(result.photosets.photoset);
+						break;
+					
+					case 'photosetComments':
+					case 'comments':
+						resolve(result.comments.comment);
+						break;
+						
+					case 'photosInGallery':
+					case 'gallery':
+					case 'galleriesOf':
+						resolve(result.galleries.gallery);
+						break;
+						
+					case 'groupInfo':
+						resolve(result.group);
+						break;
+						
+					case 'topics':
+						resolve(result.topics.topic);
+						break;
+					
+					case 'placeInfo':
+						resolve(result.place);
+						break;
+						
+					case 'tagClusters':
+						resolve(result.clusters.cluster);
+						break;
+						
+					case 'relatedTags':
+						resolve(result.tags.tag);
+						break;
+					
+					case 'profile':
+						resolve(result.profile);
+						break;
+					
+					case 'personInfo':
+						resolve(result.person);
+						break;
+					
+					case 'tree':
+						resolve(result.collections.collection);
+						break;
+					
+					case 'contact':
+						resolve(result.contacts.contact);
+						break;
+					
+					case 'tagList':
+					case 'popularTags':
+						resolve(result.who.tags.tag);
+						break;
+						
+					case 'streamContext':
+						resolve(result);
+						break;
+					
+					case 'exif':
+						resolve(result.photo.exif);
+						break;
+						
+					case 'favPeople':
+						resolve(result.photo.person);
+						break;
+					
+					case 'people':
+						resolve(result.people.person);
+						break;
+					
+					case 'hotoInfo':
+						resolve(result.photo);
+						break;
+					
+					case 'size':
+						resolve(result.sizes.size);
+						break;
+					
+					case 'locations':
+						resolve(result.photo.location);
+						break;
+									
+					default:
+						console.log('sorry we can\'t find matching resolve type');}						
 			}
 		});	
 	});		
 }
 
-function searchGroups(args){
-	//console.log(args);
-	return new Promise((resolve,reject) =>{
-		flickr.get("groups.search", args, function(err, result){
-			if (err) {
-				console.error(err);
-				reject(err);
-			}else{
-				//console.log(result.photos.photo);
-				resolve(result.groups.group);
-			}
-		});	
-	});		
-}
-
-function recentPhotos(args){
-	return new Promise((resolve,reject) =>{
-		flickr.get("photos.getRecent",args,function(err,result){
-			if(err){
-				console.log(err);
-				reject(err);
-			}else{
-				resolve(result.photos.photo);
-			}
-		});
-	});
-}
-
-function searchPlaces(args){
-	return new Promise((resolve,reject) =>{
-		flickr.get("places.find",args,function(err,result){
-			if(err){
-				console.log(err);
-				reject(err);
-			}else{
-				resolve(result.places.place);
-			}
-		});
-	});
-}
-
-function getTopPlaces(args){
-	return new Promise((resolve,reject) =>{
-		flickr.get("places.getTopPlacesList",args,function(err,result){
-			if(err){
-				console.log(err);
-				reject(err);
-			}else{
-				resolve(result.places.place);
-			}
-		});
-	});
-}
-function searchPlacesBoundingBox(args){
-	return new Promise((resolve,reject) =>{
-	flickr.get("places.placesForBoundingBox	",args,function(err,result){
-		if(err){
-			console.log(err);
-			reject(err);
-		}else{
-			resolve(result.places.place);
-		}
-		});
-	});
-}
-
-function searchUser(args){
-	return new Promise((resolve,reject) =>{
-	flickr.get("people.findByUsername",args,function(err,result){
-		if(err){
-			console.log(err);
-			reject(err);
-		}else{
-			resolve(result.user);
-		}
-		});
-	});
-}
-
-function getContexts(photo_id,param){
-	return new Promise((resolve,reject) =>{
-		if (param==='stream'){
-			flickr.get("photos.getContext", {"photo_id":photo_id}, function(err, result){
-				if (err) {
-					console.error(err);
-					reject(err);
-				}else{
-					resolve(result);
-				}
-			});
-		}else{
-			flickr.get("photosets.getContext", {"photo_id":photo_id}, function(err, result){
-				if (err) {
-					console.error(err);
-					reject(err);
-				}else{
-					resolve(result);
-				}
-			});
-		}
-	});		
-}
-
-function getExif(photo_id){
-	return new Promise((resolve,reject) =>{
-		flickr.get("photos.getExif", {"photo_id":photo_id}, function(err, result){
-			if (err) {
-				console.error(err);
-				reject(err);
-			}else{
-				//console.log(result.photo.exif);
-				resolve(result.photo.exif);
-			}
-		});
-		
-	});		
-}
-
-function getContactsPhoto(user_id){
-	//console.log(args);
-	return new Promise((resolve,reject) =>{
-		flickr.get("photos.getContactsPublicPhotos", {"user_id":user_id}, function(err, result){
-			if (err) {
-				console.error(err);
-				reject(err);
-			}else{
-				//console.log(result.photos.photo);
-				resolve(result);
-			}
-		});	
-	});		
-}
-
-function getInfo(photo_id){
-	//console.log(args);
-	return new Promise((resolve,reject) =>{
-		flickr.get("photos.getInfo", {"photo_id":photo_id}, function(err, result){
-			if (err) {
-				console.error(err);
-				reject(err);
-			}else{
-				//console.log(result.photo);
-				resolve(result.photo);
-			}
-		});	
-	});		
-}
-
-function getPopular(nsid,args){
-	args["user_id"] = nsid;
-	return new Promise((resolve,reject) =>{
-		flickr.get("photos.getPopular", args, function(err, result){
-			if (err) {
-				console.error(err);
-				reject(err);
-			}else{
-				resolve(result.photos.photo);
-			}
-		});	
-	});		
-}
-
-function getFavoritePhotos(nsid,args){
-	args["user_id"] = nsid;
-	return new Promise((resolve,reject) =>{
-		flickr.get("favorites.getPublicList", args, function(err, result){
-			if (err) {
-				console.error(err);
-				reject(err);
-			}else{
-				resolve(result.photos.photo);
-			}
-		});	
-	});		
-}
-
-function getFavoritePeople(photo_id){
-	return new Promise((resolve,reject) =>{
-		flickr.get("photos.getFavorites", {"photo_id":photo_id}, function(err, result){
-			if (err) {
-				console.error(err);
-				reject(err);
-			}else{
-				//console.log(result.photos.photo);
-				resolve(result.photo.person);
-			}
-		});	
-	});	
-}
-
-function getSizes(photo_id){
-	return new Promise((resolve,reject) =>{
-		flickr.get("photos.getSizes",{"photo_id":photo_id},function(err,result){
-			if (err) {
-				console.error(err);
-				reject(err);
-			}else{
-				//console.log(result.photos.photo);
-				resolve(result.sizes.size);
-			}
-		});
-	});
-}
-
-function getComments(photo_id,args){
-	args["photo_id"] = photo_id;
-	return new Promise((resolve,reject) =>{
-		flickr.get("photos.comments.getList",args, function(err,result){
-			if (err) {
-				console.error(err);
-				reject(err);
-			}else{
-				//console.log(result.photos.photo);
-				resolve(result.comments.comment);
-			}
-		});
-	});
-}
-
-function getLocations(photo_id){
-	return new Promise((resolve,reject) =>{
-		flickr.get("photos.geo.getLocation",{"photo_id":photo_id},function(err,result){
-			if (err) {
-				console.error(err);
-				reject(err);
-			}else{
-				//console.log(result.photos.photo);
-				resolve(result.photo.location);
-			}
-		});
-	});
-}
-
-function getPeople(photo_id){
-	return new Promise((resolve,reject) =>{
-		flickr.get("photos.people.getList",{"photo_id":photo_id},function(err,result){
-			if (err) {
-				console.error(err);
-				reject(err);
-			}else{
-				//console.log(result.photos.photo);
-				resolve(result.people.person);
-			}
-		});
-	});
-}
-
-function getPhotoset(user_id,args){
-	args['user_id'] = user_id;
-	return new Promise((resolve,reject) =>{
-		flickr.get("photosets.getList",args,function(err,result){
-			if (err) {
-				console.error(err);
-				reject(err);
-			}else{
-				resolve(result.photosets.photoset);
-			}
-		});
-	});
-}
-
-function getPhotos(user_id,args){
-	args['user_id'] = user_id;
-	return new Promise((resolve,reject) =>{
-		flickr.get("people.getPublicPhotos",args,function(err,result){
-			if (err) {
-				console.error(err);
-				reject(err);
-			}else{
-				resolve(result.photos.photo);
-			}
-		});
-	});
-}
-
-function getContacts(user_id,args){
-	args['user_id'] = user_id;
-	return new Promise((resolve,reject) =>{
-		flickr.get("contacts.getPublicList",args,function(err,result){
-			if (err) {
-				console.error(err);
-				reject(err);
-			}else{
-				console.log(result)
-				resolve(result.contacts.contact);
-			}
-		});
-	});
-}
-
-function getPhotosOf(user_id,args){
-	args['user_id'] = user_id;
-	return new Promise((resolve,reject) =>{
-		flickr.get("people.getPhotosOf",args,function(err,result){
-			if (err) {
-				console.error(err);
-				reject(err);
-			}else{
-				resolve(result.photos.photo);
-			}
-		});
-	});
-}
-
-function getPhotosetComments(photoset_id){
-	//console.log(photoset_id);
-	return new Promise((resolve,reject) =>{
-		flickr.get("photosets.comments.getList",{"photoset_id":photoset_id},function(err,result){
-			if (err) {
-				console.error(err);
-				reject(err);
-			}else{
-				//console.log(result.comments.comment);
-				resolve(result.comments.comment);
-			}
-		});
-	});
-}
-
-function getPlaceInfo(place_id){
-	return new Promise((resolve,reject) =>{
-		flickr.get("places.getInfo",{"place_id":place_id},function(err,result){
-			if (err) {
-				console.error(err);
-				reject(err);
-			}else{
-				//console.log(result.comments.comment);
-				resolve(result.place);
-			}
-		});
-	});
-}
-
-function getProfile(user_id){
-	return new Promise((resolve,reject) =>{
-		flickr.get("profile.getProfile",{"user_id":user_id},function(err,result){
-			if (err) {
-				console.error(err);
-				reject(err);
-			}else{
-				//console.log(result.comments.comment);
-				resolve(result.profile);
-			}
-		});
-	});
-}
-
-function getGroups(user_id){
-	return new Promise((resolve,reject) =>{
-		flickr.get("people.getPublicGroups",{"user_id":user_id},function(err,result){
-			if (err) {
-				console.error(err);
-				reject(err);
-			}else{
-				//console.log(result.comments.comment);
-				resolve(result.groups.group);
-			}
-		});
-	});
-}
-
-function getPersonInfo(user_id){
-	return new Promise((resolve,reject) =>{
-		flickr.get("people.getInfo",{"user_id":user_id},function(err,result){
-			if (err) {
-				console.error(err);
-				reject(err);
-			}else{
-				//console.log(result.comments.comment);
-				resolve(result.person);
-			}
-		});
-	});
-}
-
-function getTree(user_id){
-	return new Promise((resolve,reject) =>{
-		flickr.get("collections.getTree",{"user_id":user_id},function(err,result){
-			if (err) {
-				console.error(err);
-				reject(err);
-			}else{
-				//console.log(result.comments.comment);
-				resolve(result.collections.collection);
-			}
-		});
-	});
-}
-
-function getGroupInfo(group_id){
-	return new Promise((resolve,reject) =>{
-		flickr.get("groups.getInfo",{"group_id":group_id},function(err,result){
-			if (err) {
-				console.error(err);
-				reject(err);
-			}else{
-				//console.log(result.comments.comment);
-				resolve(result.group);
-			}
-		});
-	});
-}
-
-function getGalleriesOf(photo_id,args){
-	args['photo_id'] = photo_id;
-	return new Promise((resolve,reject) =>{
-		flickr.get("galleries.getListForPhoto",args,function(err,result){
-			if (err) {
-				console.error(err);
-				reject(err);
-			}else{
-				//console.log(result.galleries);
-				resolve(result.galleries.gallery);
-			}
-		});
-	});
-}
-
-function getGalleries(user_id,args){
-	args['user_id'] = user_id;
-	return new Promise((resolve,reject) =>{
-		flickr.get("galleries.getList",args,function(err,result){
-			if (err) {
-				console.error(err);
-				reject(err);
-			}else{
-				//console.log(result.galleries);
-				resolve(result.galleries.gallery);
-			}
-		});
-	});
-}
-
-function getPhotosInGallery(gallery_id,args){
-	args['gallery_id'] = gallery_id;
-	return new Promise((resolve,reject) =>{
-		flickr.get("galleries.getPhotos",args,function(err,result){
-			if (err) {
-				console.error(err);
-				reject(err);
-			}else{
-				//console.log(result.galleries);
-				resolve(result.galleries.gallery);
-			}
-		});
-	});
-}
-
-function getTopics(group_id){
-	return new Promise((resolve,reject) =>{
-		flickr.get("groups.discuss.topics.getList",{"group_id":group_id},function(err,result){
-			if (err) {
-				console.error(err);
-				reject(err);
-			}else{
-				//console.log(result.galleries);
-				resolve(result.topics.topic);
-			}
-		});
-	});
-}
-
-function interestingPhotos(args){
-	return new Promise((resolve,reject) =>{
-		flickr.get("interestingness.getList",args,function(err,result){
-			if (err) {
-				console.error(err);
-				reject(err);
-			}else{
-				//console.log(result.galleries);
-				resolve(result.photos.photo);
-			}
-		});
-	});
-}
-
-function getPandas(){
-	return new Promise((resolve,reject) =>{
-		flickr.get("panda.getList",{},function(err,result){
-			if (err) {
-				console.error(err);
-				reject(err);
-			}else{
-				//console.log(result.galleries);
-				resolve(result.pandas.panda);
-			}
-		});
-	});
-}
-
-function getPandaPhotos(panda_name,args){
-	args['panda_name'] = panda_name;
-	return new Promise((resolve,reject) =>{
-		flickr.get("panda.getPhotos",args,function(err,result){
-			if (err) {
-				console.error(err);
-				reject(err);
-			}else{
-				console.log(JSON.stringify(result));
-				resolve(result.photos.photo);
-			}
-		});
-	});
-}
-
-module.exports = {
-					searchPhotos,
-					searchGroups,
-					recentPhotos,
-					getContexts,
-					getContactsPhoto,
-					getExif,
-					getFavoritePeople,
-					getFavoritePhotos,
-					getInfo,
-					getPopular,
-					getSizes,
-					getComments,
-					getLocations,
-					getPeople,
-					getPhotos,
-					getPhotosOf,
-					getPhotoset,
-					getPhotosetComments,
-					searchPlaces,
-					getPlaceInfo,
-					getTopPlaces,
-					searchPlacesBoundingBox,
-					getProfile,
-					searchUser,
-					getGroups,
-					getPersonInfo,
-					getTree,
-					getContacts,
-					getGroupInfo,
-					getGalleriesOf,
-					getGalleries,
-					getPhotosInGallery,
-					getTopics,
-					interestingPhotos,
-					getPandas,
-					getPandaPhotos
-				};
+module.exports = flickrAPI;
