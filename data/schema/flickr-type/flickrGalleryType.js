@@ -7,7 +7,7 @@ var {GraphQLSchema,
 	GraphQLBoolean
 } = require('graphql');
 
-var {getPhotosInGallery} = require('../../../API/flickrAPI');
+var flickrAPI = require('../../../API/flickrAPI');
 
 const flickrGalleryType = module.exports = new GraphQLObjectType({
 	name:'flickrGallery',
@@ -33,7 +33,7 @@ const flickrGalleryType = module.exports = new GraphQLObjectType({
 									args: {
 											page: 		{type:GraphQLInt, defaultvalue:1},
 											per_page:	{type:GraphQLInt, defaultvalue:10}},
-									resolve: ({id},args) => getPhotosInGallery(id,args)},
+									resolve: ({id},args) => flickrAPI(endpoint="galleries.getPhotos", addon ={"gallery_id":id},args=args,resolveName="photosInGallery")},
 		})
 });
 

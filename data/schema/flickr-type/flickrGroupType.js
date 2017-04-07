@@ -8,7 +8,7 @@ var {
 	GraphQLBoolean
 } = require('graphql');
 
-var {getGroupInfo,getTopics} = require('../../../API/flickrAPI');
+var flickrAPI = require('../../../API/flickrAPI');
 
 const flickrGroupType = module.exports = new GraphQLObjectType({
 	name:'flickrGroup',
@@ -25,10 +25,11 @@ const flickrGroupType = module.exports = new GraphQLObjectType({
 		pool_count:			{type:GraphQLInt},
 		
 		groupInfo:			{type:flickrGroupInfoType,
-								resolve:({nsid})=>getGroupInfo(nsid)},
+								resolve:({nsid})=>flickrAPI(endpoint="groups.getInfo",addon={"group_id":nsid},args={},resolveName="groupInfo")},
+								
 		topics:				{type: new GraphQLList(flickrTopicType),
 								description:'Get a list of discussion topics in a group.',
-								resolve:({nsid})=>getTopics(nsid)},
+									resolve:({nsid})=>flickrAPI(endpoint="groups.discuss.topics.getList",addon={"group_id":nsid},args={},resolveName="topics")},
 		})
 });
 

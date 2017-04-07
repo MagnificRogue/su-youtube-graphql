@@ -8,9 +8,7 @@ var {
 	GraphQLBoolean
 } = require('graphql');
 
-var {getPhotos,
-	getPhotosetComments} 
-= require('../../../API/flickrAPI');
+var flickrAPI = require('../../../API/flickrAPI');
 
 const flickrPhotosetType = module.exports = new GraphQLObjectType({
 	name:'flickrPhotoset',
@@ -34,9 +32,9 @@ const flickrPhotosetType = module.exports = new GraphQLObjectType({
 		
 		/*--------------------nested-------------------*/
 		photos:			{type:new GraphQLList(flickrPhotoType),
-							resolve:({id})=>getPhotos(id)},	
+							resolve:({id})=> flickrAPI(endpoint="photosets.getPhotos",addon={"photoset_id":id},args={},resolveName="photosInSet")},
 		comments:		{type:new GraphQLList(flickrCommentType),
-							resolve:({id})=>getPhotosetComments(id)}
+							resolve:({id})=> flickrAPI(endpoint="photosets.comments.getList",addon={"photoset_id":id},args={},resolveName="photosetComments")},
 	})
 });
 

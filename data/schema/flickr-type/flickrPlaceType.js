@@ -8,7 +8,7 @@ var {
 	GraphQLBoolean
 } = require('graphql');
 
-var {getPlaceInfo} = require('../../../API/flickrAPI');
+var flickrAPI = require('../../../API/flickrAPI');
 
 const flickrPlaceType = module.exports = new GraphQLObjectType({
 	name:'flickrPlace',
@@ -19,14 +19,14 @@ const flickrPlaceType = module.exports = new GraphQLObjectType({
 		latitude:		{type:GraphQLFloat},
 		longitude:		{type:GraphQLFloat},
 		place_url:		{type:GraphQLString},
-		place_type:		{type:GraphQLInt},
+		place_type:		{type:GraphQLString},
 		timezone:		{type:GraphQLString},
 		_content:		{type:GraphQLString},
 		woe_name:		{type:GraphQLString},
 		
 		/*---------------------nested------------------*/
 		placeInfo:		{type:flickrPlaceInfoType,
-							resolve:({place_id})=>getPlaceInfo(place_id)},
+							resolve:({place_id})=>flickrAPI(endpoint="places.getInfo",addon={"place_id":place_id},args={},resolveName="placeInfo")},
 	})
 });
 

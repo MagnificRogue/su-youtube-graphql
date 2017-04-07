@@ -8,21 +8,7 @@ var {
 	GraphQLBoolean
 } = require('graphql');
 
-var {	getContexts,
-		getExif,
-		getFavoritePeople,
-		getContactsPhoto,
-		getInfo,
-		getPopular,
-		getSizes,
-		getComments,
-		getLocations,
-		getPeople,
-		getPhotoset,
-		getProfile,
-		getGalleriesOf
-}= require('../../../API/flickrAPI');
-
+var flickrAPI = require('../../../API/flickrAPI');
 
 const flickrPhotoType = module.exports = new GraphQLObjectType({
 	name:'flickrPhoto',
@@ -40,19 +26,24 @@ const flickrPhotoType = module.exports = new GraphQLObjectType({
 		isfamily:	{type:GraphQLInt },
 		/*------------------nested---------------------*/
 		streamContext: 	{type:flickrContextType,
-							resolve:({id}) => getContexts(id,'stream')},
-		setContext:	{type:flickrContextType,
-						resolve:({id}) => getContexts(id,'set')},
+							resolve:({id}) => flickrAPI(endpoint="photos.getContext",addon={"photo_id": id},args={},resolveName="streamContext")},
+		//setContext:	{type:flickrContextType,
+		//				resolve:({id}) => flickrGeneric(endpoint="photosets.getContext", addon={"photo_id": id},args={})},
 		Exif:		{type:new GraphQLList(flickrExifType),
-						resolve:({id}) => getExif(id)},
+						resolve:({id}) => flickrAPI(endpoint="photos.getExif",addon={"photo_id": id},args={},resolveName="exif")},
+						
 		favoritePeople:	{type:new GraphQLList(flickrPersonType),
-						resolve:({id}) => getFavoritePeople(id)},
+						resolve:({id}) => flickrAPI(endpoint="photos.getFavorites",addon={"photo_id": id},args={},resolveName="favPeople")},
+						
 		people:		{type:new GraphQLList(flickrPersonType),
-						resolve:({id}) => getPeople(id)},
+						resolve:({id}) => flickrAPI(endpoint="photos.people.getList",addon={"photo_id": id},args={},resolveName="people")},
+						
 		info:		{type:flickrPhotoInfoType,
-						resolve: ({id})=>getInfo(id)},
+						resolve: ({id})=> flickrAPI(endpoint="photos.getInfo",addon={"photo_id": id},args={},resolveName="photoInfo")},
+						
 		size:		{type:new GraphQLList(flickrSizeType),
-						resolve: ({id}) => getSizes(id)},
+						resolve: ({id}) => flickrAPI(endpoint="photos.getSizes",addon={"photo_id": id},args={},resolveName="size")},
+						
 		comments:	{type:new GraphQLList(flickrCommentType),
 						args:{
 							min_comment_date:{
@@ -64,15 +55,17 @@ const flickrPhotoType = module.exports = new GraphQLObjectType({
 								description:'Maximum date that a a comment was added. The date should be in the form of a unix timestamp.'
 							}
 						},
-						resolve:({id},args) => getComments(id,args)},
+						resolve:({id},args) => flickrAPI(endpoint="photos.comments.getList", addon={"photo_id":id},args=args,resolveName="comments")},
+						
 		locations:	{type: flickrLocationType,
-						resolve:({id}) => getLocations(id)},
+						resolve:({id}) => flickrAPI(endpoint="photos.geo.getLocation", addon={"photo_id":id},args={},resolveName="locations")},
+						
 		gallariesOf:		{type: new GraphQLList(flickrGalleryType),
 							description:'Return the list of galleries to which a photo has been added. Galleries are returned sorted by date which the photo was added to the gallery.',
 							args: {
 							page: 		{type:GraphQLInt, defaultvalue:1},
 							per_page:	{type:GraphQLInt, defaultvalue:10}},
-						resolve: ({id},args) => getGalleriesOf(id,args)},
+						resolve: ({id},args) => flickrAPI(endpoint = "galleries.getListForPhoto", addon = {"photo_id":id}, args = args,resolveName='galleriesOf')},
 	})
 });
 
@@ -106,7 +99,7 @@ const flickrPhotoInfoType = new GraphQLObjectType({
 		dates:			{type:flickrDateType},
 		comments:		{type:GraphQLString,
 							resolve: ({comments})=>{return comments._content}},
-		tags:			{type:new GraphQLList(flickrTagType),
+		tagged:			{type:new GraphQLList(flickrTaggedType),
 							resolve: ({tags})=>{return tags.tag}},
 		urls:			{type:new GraphQLList(flickrUrlType),
 							resolve: ({urls}) =>{return urls.url}}
@@ -120,9 +113,9 @@ const flickrUrlType = new GraphQLObjectType({
 		_content:	{type:GraphQLString},
 	})
 });
-const flickrTagType = new GraphQLObjectType({
-	name:'flickrTag',
-	description:'return a Tag',
+const flickrTaggedType = new GraphQLObjectType({
+	name:'flickrTagged',
+	description:'return a Tagged in photo',
 	fields: () =>({
 		id:			{type:GraphQLString},
 		author:		{type:GraphQLString},
