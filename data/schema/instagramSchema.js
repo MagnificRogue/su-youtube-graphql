@@ -31,6 +31,10 @@ var {
 } = require('./instagramSchema/mediaSchema.js');
 
 var {
+	likesType
+} = require('./instagramSchema/likesSchema.js');
+
+var {
 	commentsType
 } = require('./instagramSchema/commentsSchema.js');
 
@@ -131,6 +135,16 @@ const instagramQueryType = new GraphQLObjectType({
 				}
 			},
 			resolve:(_, args) => instagram(args, "comments")
+		},
+		likes:{
+			type: likesType,
+			args:{
+				media_id: {
+					type: GraphQLString,
+					description: "likes"
+				}
+			},
+			resolve:(_, args) => instagram(args, "likes")
 		},
 	})
 })

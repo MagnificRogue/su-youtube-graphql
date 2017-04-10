@@ -43,6 +43,9 @@ function instagram(args, fname){
             case "comments":
                 queryUrl = comments(args, queryUrl);
                 break;
+             case "likes":
+                queryUrl = likes(args, queryUrl);
+                break;
         }     
 
         var options = {
@@ -129,6 +132,12 @@ function mediaSearch(args, queryUrl){
 
 function comments(args, queryUrl){
     queryUrl += ('/media/' + args.media_id + "/comments?access_token=" + access_token);
+    console.log(queryUrl);
+    return queryUrl
+}
+
+function likes(args, queryUrl){
+    queryUrl += ('/media/' + args.media_id + "/likes?access_token=" + access_token);
     console.log(queryUrl);
     return queryUrl
 }
