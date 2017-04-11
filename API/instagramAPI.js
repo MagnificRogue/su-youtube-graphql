@@ -43,8 +43,17 @@ function instagram(args, fname){
             case "comments":
                 queryUrl = comments(args, queryUrl);
                 break;
-             case "likes":
+            case "likes":
                 queryUrl = likes(args, queryUrl);
+                break;
+            case "tagName":
+                queryUrl = tagName(args, queryUrl);
+                break;
+            case "tagMediaRecent":
+                queryUrl = tagMediaRecent(args, queryUrl);
+                break;
+            case "tagSearch":
+                queryUrl = tagSearch(args, queryUrl);
                 break;
         }     
 
@@ -138,6 +147,24 @@ function comments(args, queryUrl){
 
 function likes(args, queryUrl){
     queryUrl += ('/media/' + args.media_id + "/likes?access_token=" + access_token);
+    console.log(queryUrl);
+    return queryUrl
+}
+
+function tagName(args, queryUrl){
+    queryUrl += ('/tags/' + args.tag_name  + '?access_token=' + access_token);
+    console.log(queryUrl);
+    return queryUrl
+}
+
+function tagMediaRecent(args, queryUrl){
+    queryUrl += ('/tags/' + args.tag_name  + '/media/recent?access_token=' + access_token);
+    console.log(queryUrl);
+    return queryUrl
+}
+
+function tagSearch(queryUrl){
+    queryUrl += ('/tags/search?q=' + args.q + '&access_token=' + access_token);
     console.log(queryUrl);
     return queryUrl
 }

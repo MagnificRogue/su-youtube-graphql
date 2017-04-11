@@ -38,6 +38,12 @@ var {
 	commentsType
 } = require('./instagramSchema/commentsSchema.js');
 
+var {
+	tagNameType,
+	tagMediaRecentType,
+	tagSearchType
+} = require('./instagramSchema/tagsSchema.js');
+
 const instagramQueryType = new GraphQLObjectType({
 	name: 'instagramQuery',
 	description: 'instagram api call',
@@ -145,6 +151,36 @@ const instagramQueryType = new GraphQLObjectType({
 				}
 			},
 			resolve:(_, args) => instagram(args, "likes")
+		},
+		tagName:{
+			type: tagNameType,
+			args:{
+				tag_name: {
+					type: GraphQLString,
+					description: "tag name"
+				}
+			},
+			resolve:(_, args) => instagram(args, "tagName")
+		},
+		tagMediaRecent:{
+			type: tagMediaRecentType,
+			args:{
+				tag_name: {
+					type: GraphQLString,
+					description: "tag name"
+				}
+			},
+			resolve:(_, args) => instagram(args, "tagMediaRecent")
+		},
+		tagSearch:{
+			type: tagSearchType,
+			args:{
+				q: {
+					type: GraphQLString,
+					description: "query"
+				}
+			},
+			resolve:(_, args) => instagram(args, "tagSearch")
 		},
 	})
 })

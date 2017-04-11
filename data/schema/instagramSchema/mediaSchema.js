@@ -107,8 +107,8 @@ const videosType = new GraphQLObjectType({
 	})
 })
 
-const imageDataType = new GraphQLObjectType({
-	name: 'imageData',
+const ImageType = new GraphQLObjectType({
+	name: 'Image',
 	description: 'json structure for Image Data Type',
 	fields: ()=> ({
 		distance: {
@@ -131,8 +131,8 @@ const imageDataType = new GraphQLObjectType({
 	})
 })
 
-const VideoDataType = new GraphQLObjectType({
-	name: "VideoData",
+const VideoType = new GraphQLObjectType({
+	name: "Video",
 	description: "json structure for Video Type",
 	fields: ()=> ({
 		distance: {
@@ -156,53 +156,48 @@ const VideoDataType = new GraphQLObjectType({
 	})
 })
 
-const ImageType = new GraphQLObjectType({
-	name: 'Image',
-	description: 'json structure for Image Type',
-	fields: ()=> ({
-		data: {type: imageDataType},
-	}),
-})
-
-const VideoType = new GraphQLObjectType({
-	name: 'Video',
-	description: 'json structure for Video Type',
-	fields: ()=> ({
-		data: {type: VideoDataType},
-	}),
-})
-
 const resolveType = (result) => {
-	if (result.data.videos){
+	if (result.videos){
 		return VideoType;
 	}else{
 		return ImageType;
 	}
 };
 
-const mediaIDType = new GraphQLUnionType({
-	name: 'mediaID',
-	description: 'json structure for Media ID Type',
+const mediaType = new GraphQLUnionType({
+	name: 'media',
+	description: 'json structure for Media Type',
 	types: [ImageType, VideoType],
 	resolveType: resolveType
 })
 
-const mediaShortCodeType = new GraphQLUnionType({
-	name: 'mediaShortCode',
-	description: 'json structure for Media ShortCode Type',
-	types: [ImageType, VideoType],
-	resolveType: resolveType
+const mediaIDType = new GraphQLObjectType({
+	name: "mediaID",
+	description: "json structure for Media ID Type",
+	fields: ()=> ({
+		data: {type: new GraphQLList(mediaType)}
+	})
 })
 
-const mediaSearchType = new GraphQLUnionType({
-	name: 'mediaSearch',
-	description: 'json structure for Media Search Type',
-	types: [ImageType, VideoType],
-	resolveType: resolveType
+const mediaShortCodeType = new GraphQLObjectType({
+	name: "mediaShortCode",
+	description: "json structure for Media Short Code Type",
+	fields: ()=> ({
+		data: {type: new GraphQLList(mediaType)}
+	})
+})
+
+const mediaSearchType = new GraphQLObjectType({
+	name: "mediaSearch",
+	description: "json structure for Media Search Type",
+	fields: ()=> ({
+		data: {type: new GraphQLList(mediaType)}
+	})
 })
 
 module.exports = {
 	mediaIDType,
 	mediaShortCodeType,
 	mediaSearchType,
+	mediaType
 }
