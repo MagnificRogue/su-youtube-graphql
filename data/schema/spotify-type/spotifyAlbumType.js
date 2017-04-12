@@ -25,17 +25,24 @@ const spotifyAlbumType = module.exports = new GraphQLObjectType({
 		type:				{type:GraphQLString},
 		uri:				{type:GraphQLString},
 		/*-----------------------full ------------------------*/
-		copyright:			{type:new GraphQLList(spotifyCopyrightType)},
+		albumInfo:				{type:spotifyALbumInfoType,
+								resolve:({id}) => spotifyAPI(resolveName = 'getAlbum',id=id,args = {})},
+		/*-----------------------nested--------------------------*/
+		tracks:				{type:new GraphQLList(spotifyTrackType),
+								resolve:({id}) => spotifyAPI(resolveName = 'getAlbumTracks', id=id, args = {})},
+	})
+});
+
+const spotifyALbumInfoType = new GraphQLObjectType({
+	name:'spotifyAlbumInfo',
+	fields: ()=>({
+		copyrights:			{type:new GraphQLList(spotifyCopyrightType)},
 		external_ids:		{type:GraphQLString,
 								resolve:({external_ids})=>{return JSON.stringify(external_ids)}},
 		genres:				{type:new GraphQLList(GraphQLString)},
 		label:				{type:GraphQLString},
 		popularity:			{type:GraphQLInt},
 		release_date:		{type:GraphQLString},
-		//tracks:				{type:spotifyPagingType},
-		/*-----------------------nested--------------------------*/
-		tracks:				{type:new GraphQLList(spotifyTrackType),
-								resolve:({id}) => spotifyAPI(resolveName = 'getAlbumTracks', id=id, args = {})},
 	})
 });
 

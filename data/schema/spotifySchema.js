@@ -7,7 +7,6 @@ var {
 	GraphQLFloat,
 	GraphQLBoolean
 } = require('graphql');
-
 var spotifyAPI = require('./../../API/spotifyAPI');
 	
 const spotifyQueryType = module.exports = new GraphQLObjectType({
@@ -110,6 +109,49 @@ const spotifyQueryType = module.exports = new GraphQLObjectType({
 			type:spotifyUserType,
 			args:	{user_id: {type:GraphQLString}},
 			resolve: (_,args) =>spotifyAPI( resolveName='getUser',id='',args = args)},
+		
+		browseFeaturedPlaylists:{
+			type:new GraphQLList(spotifyPlaylistType),
+			args: {
+				locale:		{type:GraphQLString,
+								description:`The desired language, consisting of a lowercase 
+								ISO 639 language code and an uppercase ISO 3166-1 alpha-2 country code, 
+								joined by an underscore. For example: es_MX, meaning "Spanish (Mexico)".`,
+								defaultValue:"en_US"},
+				country:	{type:GraphQLString,
+								description:'Optional. A country: an ISO 3166-1 alpha-2 country code.',
+								defaultValue:"US"},
+				timestamp:	{type:GraphQLString},
+				limit:		{type:GraphQLInt, defaultValue:20},
+				offset:		{type:GraphQLInt, defaultValue:0},
+			},
+			resolve:(_,args) => spotifyAPI( resolveName = 'browseFeaturedPlaylists', id='',args=args)},
+		
+		browseNewReleases:{
+			type:new GraphQLList(spotifyAlbumType),
+			args: {	country:	{type:GraphQLString,
+								description:'Optional. A country: an ISO 3166-1 alpha-2 country code.',
+								defaultValue:"US"},
+					limit:		{type:GraphQLInt, defaultValue:20},
+					offset:		{type:GraphQLInt, defaultValue:0},
+				},
+			resolve:(_,args) => spotifyAPI( resolveName = 'browseNewReleases', id='',args=args)},
+			
+		browseCategories:{
+			type:new GraphQLList(spotifyCategoryType),
+			args:	{
+				locale:		{type:GraphQLString,
+								description:`The desired language, consisting of a lowercase 
+								ISO 639 language code and an uppercase ISO 3166-1 alpha-2 country code, 
+								joined by an underscore. For example: es_MX, meaning "Spanish (Mexico)".`,
+								defaultValue:"en_US"},
+				country:	{type:GraphQLString,
+								description:'Optional. A country: an ISO 3166-1 alpha-2 country code.',
+								defaultValue:"US"},
+				limit:		{type:GraphQLInt, defaultValue:20},
+				offset:		{type:GraphQLInt, defaultValue:0},
+			},
+			resolve: (_,args) => spotifyAPI( resolveName = 'browsweCategories',id='',args = args)},
 	})
 });
 
@@ -118,3 +160,4 @@ const spotifyArtistType = require('./spotify-type/spotifyArtistType');
 const spotifyPlaylistType = require('./spotify-type/spotifyPlaylistType');
 const spotifyAlbumType = require('./spotify-type/spotifyAlbumType');
 const spotifyUserType = require('./spotify-type/spotifyUserType');
+const spotifyCategoryType = require('./spotify-type/spotifyCategoryType');

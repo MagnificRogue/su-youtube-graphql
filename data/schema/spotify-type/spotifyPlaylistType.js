@@ -7,15 +7,15 @@ var {
 	GraphQLFloat,
 	GraphQLBoolean
 } = require('graphql');
+var spotifyAPI = require('../../../API/spotifyAPI');
 
 const spotifyPlaylistType = module.exports = new GraphQLObjectType({
 	name:'spotifyPlaylist',
 	fields: () => ({
+		/*----------------------------simplified----------------------*/
 		collaborative:	{type:GraphQLBoolean},
-		description:	{type:GraphQLString},
 		external_urls:	{type:GraphQLString,
 								resolve:({external_urls})=>{return JSON.stringify(external_urls)}},
-		followers:		{type:spotifyFollowerType},
 		href:			{type:GraphQLString},
 		id:				{type:GraphQLString},
 		images:			{type:new GraphQLList(spotifyImageType)},
@@ -23,9 +23,14 @@ const spotifyPlaylistType = module.exports = new GraphQLObjectType({
 		owner:			{type:spotifyUserType},
 		public:			{type:GraphQLBoolean},
 		snapshot_id:	{type:GraphQLString},
-		tracks:			{type:spotifyPagingType},
+		
 		type:			{type:GraphQLString},
 		uri:			{type:GraphQLString},
+		/*-----------------------------full------------------------*/
+		description:	{type:GraphQLString},
+		followers:		{type:spotifyFollowerType},
+		/*----------------------------nested-----------------------*/
+		tracks:			{type:spotifyPagingType},
 	})
 });
 

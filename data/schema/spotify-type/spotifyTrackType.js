@@ -27,7 +27,7 @@ const spotifyTrackType = module.exports = new GraphQLObjectType({
 		name:				{type:GraphQLString},
 		popularity:			{type:GraphQLInt},
 		preview_url:		{type:GraphQLString},
-		track_numer:		{type:GraphQLInt},
+		track_number:		{type:GraphQLInt},
 		type:				{type:GraphQLString},
 		uri:				{type:GraphQLString},
 		/*--------------------------nesting-----------------------------*/
