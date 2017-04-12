@@ -15,7 +15,7 @@ spotify.clientCredentialsGrant()
         console.log('Something went wrong when retrieving an access token', err);
   });
 
-function spotifyAPI(resolveName, args){
+function spotifyAPI(resolveName, id, args){
 	return new Promise((resolve,reject) =>{
 		switch(resolveName){
 			case 'searchTracks':
@@ -34,8 +34,64 @@ function spotifyAPI(resolveName, args){
 			
 			case 'searchPlaylists':
 				spotify.searchPlaylists(args['q'],args).then(function(data) {
-					//console.log(JSON.stringify(data.body.artists.items));
+					//console.log(JSON.stringify(data.body.playlists.items));
 					resolve(data.body.playlists.items);
+				});
+				break;
+			
+			case 'searchAlbums':
+				spotify.searchAlbums(args['q'],args).then(function(data) {
+					//console.log(JSON.stringify(data.body.albums.items));
+					resolve(data.body.albums.items);
+				});
+				break;
+			
+			case 'getUser':
+				spotify.getUser(args['user_id']).then(function(data) {
+					resolve(data.body);
+				});
+				break;
+			
+			case 'getUserPlaylists':
+				spotify.getUserPlaylists(args).then(function(data) {
+					resolve(data.body.items);
+				});
+				break;
+				
+			case 'getArtistAlbums':
+				spotify.getArtistAlbums(id).then(function(data){
+					resolve(data.body.items);
+				});
+				break;
+			
+			case 'getArtistTopTracks':
+				//console.log(args)
+				spotify.getArtistTopTracks(id,args['country']).then(function(data){
+					resolve(data.body.tracks);
+				});
+				break;
+				
+			case 'getAlbumTracks':
+				spotify.getAlbumTracks(id).then(function(data){
+					resolve(data.body.items);
+				});
+				break;
+				
+			case 'getArtistRelatedArtists':
+				spotify.getArtistRelatedArtists(id).then(function(data){
+					resolve(data.body.artists);
+				});
+				break;
+				
+			case 'audioFeatures':
+				spotify.getAudioFeaturesForTrack(id).then(function(data){
+					resolve(data.body);
+				});
+				break;
+				
+			case 'audioAnalysis':
+				spotify.getAudioAnalysisForTrack(id).then(function(data){
+					resolve(data.body);
 				});
 				break;
 				
