@@ -8,29 +8,26 @@ var {
 	GraphQLBoolean
 } = require('graphql');
 
-const spotifyPlaylistType = module.exports = new GraphQLObjectType({
-	name:'spotifyPlaylist',
-	fields: () => ({
-		collaborative:	{type:GraphQLBoolean},
-		description:	{type:GraphQLString},
+var spotifyAPI = require('../../../API/spotifyAPI');
+
+const spotifyUserType = module.exports = new GraphQLObjectType({
+	name:'spotifyUser',
+	fields: ()=>({
+		display_name:	{type:GraphQLString},
 		external_urls:	{type:GraphQLString,
 								resolve:({external_urls})=>{return JSON.stringify(external_urls)}},
 		followers:		{type:spotifyFollowerType},
 		href:			{type:GraphQLString},
 		id:				{type:GraphQLString},
 		images:			{type:new GraphQLList(spotifyImageType)},
-		name:			{type:GraphQLString},
-		owner:			{type:spotifyUserType},
-		public:			{type:GraphQLBoolean},
-		snapshot_id:	{type:GraphQLString},
-		tracks:			{type:spotifyPagingType},
 		type:			{type:GraphQLString},
 		uri:			{type:GraphQLString},
+		/*-----------------------nested----------------------*/
+		playlists:		{type:new GraphQLList(spotifyPlaylistType),
+							resolve:({id}) => spotifyAPI(resolveName = 'getUserPlaylists', id = id, args = {})},
 	})
 });
 
-const spotifyUserType = require('./spotifyUserType');
 const spotifyFollowerType = require('./spotifyFollowerType');
 const spotifyImageType = require('./spotifyImageType');
-const spotifyPagingType = require('./spotifyPagingType');
-
+const spotifyPlaylistType = require('./spotifyPlaylistType');

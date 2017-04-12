@@ -7,6 +7,7 @@ var {
 	GraphQLFloat,
 	GraphQLBoolean
 } = require('graphql');
+var spotifyAPI = require('../../../API/spotifyAPI');
 
 const spotifyAlbumType = module.exports = new GraphQLObjectType({
 	name:'spotifyAlbum',
@@ -31,8 +32,10 @@ const spotifyAlbumType = module.exports = new GraphQLObjectType({
 		label:				{type:GraphQLString},
 		popularity:			{type:GraphQLInt},
 		release_date:		{type:GraphQLString},
+		//tracks:				{type:spotifyPagingType},
+		/*-----------------------nested--------------------------*/
 		tracks:				{type:new GraphQLList(spotifyTrackType),
-								resolve: },
+								resolve:({id}) => spotifyAPI(resolveName = 'getAlbumTracks', id=id, args = {})},
 	})
 });
 
@@ -47,3 +50,4 @@ const spotifyCopyrightType = new GraphQLObjectType({
 const spotifyImageType = require('./spotifyImageType');
 const spotifyArtistType = require('./spotifyArtistType');
 const spotifyTrackType = require('./spotifyTrackType');
+//const spotifyPagingType = require('./spotifyPagingType');
