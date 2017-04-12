@@ -11,6 +11,7 @@ var spotify = new SpotifyWebApi({
 spotify.clientCredentialsGrant()
   .then(function(data) {
     spotify.setAccessToken(data.body['access_token']);
+	//console.log(data.body['access_token']);
   }, function(err) {
         console.log('Something went wrong when retrieving an access token', err);
   });
@@ -91,6 +92,39 @@ function spotifyAPI(resolveName, id, args){
 				
 			case 'audioAnalysis':
 				spotify.getAudioAnalysisForTrack(id).then(function(data){
+					resolve(data.body);
+				});
+				break;
+				
+			case 'browseFeaturedPlaylists':
+				spotify.getFeaturedPlaylists(args).then(function(data){
+					//console.log(data.body.playlists);
+					resolve(data.body.playlists.items);
+				});
+				break;
+			
+			case 'browseNewReleases':
+				spotify.getNewReleases(args).then(function(data){
+					resolve(data.body.albums.items);
+				});
+				break;
+			
+			case 'browsweCategories':
+				spotify.getCategories(args).then(function(data){
+					resolve(data.body.categories.items);
+				});
+				break;
+				
+			case 'categoryPlaylists':
+				spotify.getPlaylistsForCategory(id,args).then(function(data){
+					//console.log(data.body);
+					resolve(data.body.playlists.items);
+				});
+				break;
+				
+			case 'getAlbum':
+				spotify.getAlbum(id).then(function(data){
+					//console.log(data.body);
 					resolve(data.body);
 				});
 				break;
