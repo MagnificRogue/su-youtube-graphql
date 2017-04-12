@@ -4,7 +4,8 @@ var {
 	GraphQLString,
 	GraphQLList,
 	GraphQLInt,
-	GraphQLBoolean
+	GraphQLBoolean,
+	GraphQLFloat
 } = require('graphql');
 
 var {
@@ -43,6 +44,12 @@ var {
 	tagMediaRecentType,
 	tagSearchType
 } = require('./instagramSchema/tagsSchema.js');
+
+var {
+	locationIDType,
+	locationMediaRecentType,
+	locationSearchType
+} = require('./instagramSchema/locationsSchema.js');
 
 const instagramQueryType = new GraphQLObjectType({
 	name: 'instagramQuery',
@@ -181,6 +188,40 @@ const instagramQueryType = new GraphQLObjectType({
 				}
 			},
 			resolve:(_, args) => instagram(args, "tagSearch")
+		},
+		locationID:{
+			type: locationIDType,
+			args:{
+				location_id: {
+					type: GraphQLString,
+					description: "query"
+				}
+			},
+			resolve:(_, args) => instagram(args, "locationID")
+		},
+		locationMediaRecent:{
+			type: locationMediaRecentType,
+			args:{
+				location_id: {
+					type: GraphQLString,
+					description: "query"
+				}
+			},
+			resolve:(_, args) => instagram(args, "locationMediaRecent")
+		},
+		locationSearch:{
+			type: locationSearchType,
+			args:{
+				lat: {
+					type: GraphQLFloat,
+					description: "latitude"
+				},
+				lng: {
+					type: GraphQLFloat,
+					description: "longitude"
+				}
+			},
+			resolve:(_, args) => instagram(args, "locationSearch")
 		},
 	})
 })

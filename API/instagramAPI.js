@@ -55,6 +55,15 @@ function instagram(args, fname){
             case "tagSearch":
                 queryUrl = tagSearch(args, queryUrl);
                 break;
+            case "locationID":
+                queryUrl = locationID(args, queryUrl);
+                break;
+            case "locationMediaRecent":
+                queryUrl = locationMediaRecent(args, queryUrl);
+                break;
+            case "locationSearch":
+                queryUrl = locationSearch(args, queryUrl);
+                break;
         }     
 
         var options = {
@@ -163,8 +172,29 @@ function tagMediaRecent(args, queryUrl){
     return queryUrl
 }
 
-function tagSearch(queryUrl){
+function tagSearch(args, queryUrl){
     queryUrl += ('/tags/search?q=' + args.q + '&access_token=' + access_token);
+    console.log(queryUrl);
+    return queryUrl
+}
+
+function locationID(args, queryUrl){
+    queryUrl += ('/locations/' + args.location_id + '?access_token=' + access_token);
+    console.log(queryUrl);
+    return queryUrl
+}
+
+function locationMediaRecent(args, queryUrl){
+    queryUrl += ('/locations/' + args.location_id + '/media/recent?access_token=' + access_token);
+    console.log(queryUrl);
+    return queryUrl
+}
+
+function locationSearch(args, queryUrl){
+    queryUrl += ('/locations/search?access_token=' + access_token);
+    for(var key in args){
+        queryUrl += '&' + key + '=' + encodeURIComponent(args[key]);
+    }
     console.log(queryUrl);
     return queryUrl
 }
