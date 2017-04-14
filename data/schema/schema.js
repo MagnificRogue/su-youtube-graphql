@@ -9,15 +9,19 @@ var {
 
 var {
 	stackExchangeQueryType
-} = require('./stackExchangeSchema.js');
+} = require('./stackExchangeSchema');
 
 var {
 	mediaWikiQueryType
-} = require('./mediaWikiSchema.js');
+} = require('./mediaWikiSchema');
 
 var {
 	instagramQueryType
-} = require('./instagramSchema.js');
+} = require('./instagramSchema');
+
+var {
+	pinterestQueryType
+} = require('./pinterestSchema');
 
 function wrapper(){
 	return {}
@@ -84,6 +88,10 @@ const Query = new GraphQLObjectType({
 		},
 		instagram: {
 			type: instagramQueryType,
+			resolve:() => wrapper()
+		},
+		pinterest: {
+			type: pinterestQueryType,
 			resolve:() => wrapper()
 		},
 		dbTest: {

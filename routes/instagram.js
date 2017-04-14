@@ -7,7 +7,7 @@ var access_token = config.instagram.access_token_key;
 var client_id = config.instagram.client_id;
 var client_secret = config.instagram.client_secret;
 
-var queryUrl = 'https://api.instagram.com/v1/users/self/media/recent/?access_token=' + access_token;
+var queryUrl = 'https://api.pinterest.com/v1/me/search/boards/?query=kobe+bryant&access_token=AcXsKcuUy0Pcv1hcgX2IaLbqZezGFLSJHd9YFb9D7ZpX7SA_wgAAAAA&fields=id%2Cname%2Curl%2Ccounts%2Ccreated_at%2Ccreator%2Cdescription%2Cimage%2Cprivacy%2Creason'
 var options = {
     method: 'GET',
     uri: queryUrl,
@@ -23,7 +23,7 @@ router.get('/', function(req, res, next) {
         
         if(response) {
             console.log("send response data back")
-            res.send(response.body)
+            res.send(JSON.parse(response.body))
         }
    	});
 });
