@@ -58,7 +58,6 @@ function pinterest(args, fname){
             
             if(response) {
                 console.log("send response data back")
-                console.log(JSON.parse(response.body))
                 resolve(JSON.parse(response.body)); 
             }
         });
