@@ -7,6 +7,7 @@ var {
 	GraphQLFloat,
 	GraphQLBoolean
 } = require('graphql');
+var youtubeAPI = require('../../../API/youtubeAPI');
 	
 const youtubeChannelType = module.exports = new GraphQLObjectType({
 	name:'youtubeChannel',
@@ -24,8 +25,17 @@ const youtubeChannelType = module.exports = new GraphQLObjectType({
 		brandingSettings:	{type:channelBrandingType},
 		invideoPromotion:	{type:new GraphQLList(channelPromotionType),
 								resolve: ({invideoPromotion}) => {return invideoPromotion.items}},
-		auditDetails:		{type:channelAuditType},
+		//auditDetails:		{type:channelAuditType},
 		contentOwnerDetails:{type:channelOwnerType},
+		/*--------------------------nested-----------------------------*/
+		commentThread:			{type:new GraphQLList(youtubeCommentthreadType),
+									args:{
+										maxResults:{type:GraphQLInt,defaultValue:5},
+										searchTerms:{	type:GraphQLString,
+														description:'show the comments matching this text pattern',
+														defaultValue:''},
+									},
+									resolve:({id},args)=>youtubeAPI(resolveName='channelCommentthread',id=id, args=args)},
 	})
 });
 
@@ -195,7 +205,7 @@ const channelPromotionType = new GraphQLObjectType({
 	})
 });
 
-const channelAuditType = new GraphQLObjectType({
+/*const channelAuditType = new GraphQLObjectType({
 	name:'channelAudit',
 	fields: () => ({
 		overallGoodStanding:				{type:GraphQLBoolean},
@@ -203,7 +213,7 @@ const channelAuditType = new GraphQLObjectType({
 		copyrightStrikesGoodStanding:		{type:GraphQLBoolean},
 		contentIdClaimsGoodStanding:		{type:GraphQLBoolean},
 	})
-});
+});*/
 
 const channelOwnerType = new GraphQLObjectType({
 	name:'channelOwner',
@@ -214,3 +224,4 @@ const channelOwnerType = new GraphQLObjectType({
 });
 
 const youtubeThumbnailType = require('./youtubeThumbnailType');
+const youtubeCommentthreadType = require('./youtubeCommentthreadType');

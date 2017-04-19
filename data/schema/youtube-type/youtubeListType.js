@@ -26,9 +26,11 @@ const youtubeInfoType = new GraphQLObjectType({
 	fields:() =>({
 		kind:		{type:GraphQLString},
 		videoId:	{type:GraphQLString},
-		//channelId:	{type:GraphQLString},
-		//playlistId:	{type:GraphQLString},
+		channelId:	{type:GraphQLString},
+		playlistId:	{type:GraphQLString},
 		/*---------------nested--------------*/
+		videoInfo:		{type:new GraphQLList(youtubeVideoType),
+							resolve:({videoId}) => youtubeAPI(resolveName='video',id=videoId, args={})},
 		channelInfo:	{type:new GraphQLList(youtubeChannelType),
 							resolve:({channelId}) => youtubeAPI(resolveName='channel',id=channelId, args={})},
 		playlistInfo:	{type:new GraphQLList(youtubePlaylistType),
@@ -57,3 +59,4 @@ const youtubeSnippetType = new GraphQLObjectType({
 const youtubeThumbnailType = require('./youtubeThumbnailType');
 const youtubePlaylistType = require('./youtubePlaylistType');
 const youtubeChannelType = require('./youtubeChannelType');
+const youtubeVideoType = require('./youtubeVideoType');
