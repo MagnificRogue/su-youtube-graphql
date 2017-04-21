@@ -15,32 +15,40 @@ function redditAPI(resolveName, id, args){
 		switch(resolveName){
 			case 'searchSubreddits':
 				r.searchSubreddits(args).then((listing) =>  {
-					listing.fetchMore({amount:args['extra']}).then((data) => {
-						//console.log(data);
+					listing.fetchMore({amount:args['extra']}).then((data) =>{
 						resolve(data);
+					})
+					.catch((err) =>{
+						reject(err)
 					})
 				});
 				break;
 				
 			case 'searchSubredditNames':
 				r.searchSubredditNames(args).then((data) =>{
-					//console.log(data);
 					resolve(data);
+				})
+				.catch((err) =>{
+					reject(err)
 				});
 				break;
 				
 			case 'searchSubredditTopics':
 				r.searchSubredditTopics(args).then((data) =>{
-					//console.log(data);
-					resolve(data);
-				});
+						resolve(data);
+					})
+					.catch((err) =>{
+						reject(err)
+					});
 				break;
 				
 			case 'getPopularSubreddits':
 				r.getPopularSubreddits(args).then((listing) =>  {
 					listing.fetchMore({amount:args['extra']}).then((data) => {
-						//console.log(data);
 						resolve(data);
+					})
+					.catch((err) =>{
+						reject(err)
 					})
 				});
 				break;
@@ -48,8 +56,10 @@ function redditAPI(resolveName, id, args){
 			case 'getNewSubreddits':
 				r.getNewSubreddits(args).then((listing) =>  {
 					listing.fetchMore({amount:args['extra']}).then((data) => {
-						//console.log(data);
 						resolve(data);
+					})
+					.catch((err) =>{
+						reject(err)
 					})
 				});
 				break;
@@ -57,8 +67,10 @@ function redditAPI(resolveName, id, args){
 			case 'getGoldSubreddits':
 				r.getGoldSubreddits(args).then((listing) =>  {
 					listing.fetchMore({amount:args['extra']}).then((data) => {
-						//console.log(data);
 						resolve(data);
+					})
+					.catch((err) =>{
+						reject(err)
 					})
 				});
 				break;
@@ -66,8 +78,10 @@ function redditAPI(resolveName, id, args){
 			case 'getDefaultSubreddits':
 				r.getDefaultSubreddits(args).then((listing) =>  {
 					listing.fetchMore({amount:args['extra']}).then((data) => {
-						//console.log(data);
 						resolve(data);
+					})
+					.catch((err) =>{
+						reject(err)
 					})
 				});
 				break;
@@ -75,8 +89,10 @@ function redditAPI(resolveName, id, args){
 			case 'search':
 				r.search(args).then((listing) =>  {
 					listing.fetchMore({amount:args['extra']}).then((data) => {
-						//console.log(data);
 						resolve(data);
+					})
+					.catch((err) =>{
+						reject(err)
 					})
 				});
 				break;
@@ -84,8 +100,10 @@ function redditAPI(resolveName, id, args){
 			case 'getHot':
 				r.getHot(args).then((listing) =>  {
 					listing.fetchMore({amount:args['extra']}).then((data) => {
-						//console.log(data);
 						resolve(data);
+					})
+					.catch((err) =>{
+						reject(err)
 					})
 				});
 				break;
@@ -93,8 +111,10 @@ function redditAPI(resolveName, id, args){
 			case 'getNew':
 				r.getNew(args).then((listing) =>  {
 					listing.fetchMore({amount:args['extra']}).then((data) => {
-						//console.log(data);
 						resolve(data);
+					})
+					.catch((err) =>{
+						reject(err)
 					})
 				});
 				break;
@@ -102,8 +122,10 @@ function redditAPI(resolveName, id, args){
 			case 'getTop':
 				r.getTop(args).then((listing) =>  {
 					listing.fetchMore({amount:args['extra']}).then((data) => {
-						//console.log(data);
 						resolve(data);
+					})
+					.catch((err) =>{
+						reject(err)
 					})
 				});
 				break;
@@ -111,8 +133,10 @@ function redditAPI(resolveName, id, args){
 			case 'getControversial':
 				r.getControversial(args).then((listing) =>  {
 					listing.fetchMore({amount:args['extra']}).then((data) => {
-						//console.log(data);
 						resolve(data);
+					})
+					.catch((err) =>{
+						reject(err)
 					})
 				});
 				break;
@@ -120,8 +144,10 @@ function redditAPI(resolveName, id, args){
 			case 'getRising':
 				r.getRising(args).then((listing) =>  {
 					listing.fetchMore({amount:args['extra']}).then((data) => {
-						//console.log(data);
 						resolve(data);
+					})
+					.catch((err) =>{
+						reject(err)
 					})
 				});
 				break;
@@ -129,24 +155,30 @@ function redditAPI(resolveName, id, args){
 			case 'getNewComments':
 				r.getNewComments(args).then((listing) =>  {
 					listing.fetchMore({amount:args['extra']}).then((data) => {
-						//console.log(data);
 						resolve(data);
+					})
+					.catch((err) =>{
+						reject(err)
 					})
 				});
 				break;
 				
 			case 'trophy':
 				r.getUser(id).getTrophies().then((data) => {
-					//console.log(data.trophies);
 					resolve(data.trophies);
+				})
+				.catch((err) =>{
+					reject(err)
 				});
 				break;
 			
 			case 'overview':
 				r.getUser(id).getOverview().then((listing) =>  {
 					listing.fetchMore({amount:args['extra']}).then((data) => {
-						//console.log(data);
 						resolve(data);
+					})
+					.catch((err) =>{
+						reject(err)
 					})
 				});
 				break;
@@ -154,8 +186,10 @@ function redditAPI(resolveName, id, args){
 			case 'submission':
 				r.getUser(id).getSubmissions().then((listing) =>  {
 					listing.fetchMore({amount:args['extra']}).then((data) => {
-						//console.log(data);
 						resolve(data);
+					})
+					.catch((err) =>{
+						reject(err)
 					})
 				});
 				break;
@@ -163,8 +197,10 @@ function redditAPI(resolveName, id, args){
 			case 'comment':
 				r.getUser(id).getComments().then((listing) =>  {
 					listing.fetchMore({amount:args['extra']}).then((data) => {
-						//console.log(data);
 						resolve(data);
+					})
+					.catch((err) =>{
+						reject(err)
 					})
 				});
 				break;
@@ -175,14 +211,19 @@ function redditAPI(resolveName, id, args){
 						//console.log(data);
 						resolve(data);
 					})
+					.catch((err) =>{
+						reject(err)
+					})
 				});
 				break;
 				
 			case 'downvote':
 				r.getUser(id).getDownvotedContent().then((listing) =>  {
 					listing.fetchMore({amount:args['extra']}).then((data) => {
-						//console.log(data);
 						resolve(data);
+					})
+					.catch((err) =>{
+						reject(err)
 					})
 				});
 				break;
