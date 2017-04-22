@@ -13,6 +13,7 @@ const spotifyQueryType = require('./spotifySchema');
 const youtubeQueryType = require('./youtubeSchema');
 const redditQueryType = require('./redditSchema');
 const weiboQueryType = require('./weiboSchema');
+const tumblrQueryType = require('./tumblrSchema');
 
 function wrapper(){
 	return {}
@@ -48,6 +49,10 @@ const Query = new GraphQLObjectType({
 		},
 		weibo:{
 			type: weiboQueryType,
+			resolve:() => wrapper()
+		},
+		tumblr:{
+			type:tumblrQueryType,
 			resolve:() => wrapper()
 		},
 		stackExchange: {
