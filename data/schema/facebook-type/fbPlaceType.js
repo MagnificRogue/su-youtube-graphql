@@ -8,17 +8,17 @@ var {
 var getField = require('../../../API/fbAPI').getField;
 var getEdge = require('../../../API/fbAPI').getEdge;
 
-const placeType = module.exports = new GraphQLObjectType({
-	name:'place',
+const fbPlaceType = module.exports = new GraphQLObjectType({
+	name:'fbPlace',
 	description:'return a Facebook place',
 	fields: ()=>({
 		/*---------------------------fields----------------------*/
 		id:				{ type: GraphQLString },
 		name:			{ type: GraphQLString },
-		location: 		{ type: locationType,
+		location: 		{ type: fbLocationType,
 							resolve: ({id}) => getField({id},'location')}
 		/*---------------------------no edges---------------------*/
 	})
 });
 
-const locationType = require('./fbLocationType');
+const fbLocationType = require('./fbLocationType');

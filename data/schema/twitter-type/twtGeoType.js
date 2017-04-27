@@ -6,8 +6,8 @@ var {
 	GraphQLInt
 } = require('graphql');
 
-const geoType = module.exports = new GraphQLObjectType({
-	name: 'geo',
+const twtGeoType = module.exports = new GraphQLObjectType({
+	name: 'twtGeo',
 	description: `Search for places that can be attached to a statuses/update. 
 	Given a latitude and a longitude pair, an IP address, or a name, this request 
 	will return a list of all the valid places that can be used as the place_
@@ -23,7 +23,7 @@ const geoType = module.exports = new GraphQLObjectType({
 		place_type: {type: GraphQLString },
 		url: 		{type: GraphQLString },
 		/*--------------------------nested------------------------*/
-		contained_within: {type: new GraphQLList(geoType) }
+		contained_within: {type: new GraphQLList(twtGeoType) }
 	})
 });
 

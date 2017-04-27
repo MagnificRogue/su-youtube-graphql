@@ -9,7 +9,7 @@ var {
 var getField = require('../../../API/fbAPI').getField;
 var getEdge = require('../../../API/fbAPI').getEdge;
 
-const userType = module.exports = new GraphQLObjectType({
+const fbUserType = module.exports = new GraphQLObjectType({
 	name: 'fbUser',
 	description: 'Return a facebook user.',
 	fields: () => ({
@@ -50,70 +50,70 @@ const userType = module.exports = new GraphQLObjectType({
 		website:			{ type: GraphQLString,
 							resolve: ({id}) => getField({id},'website')},	
 							
-		age_range:			{ type: ageType,
+		age_range:			{ type: fbAgeType,
 							resolve: ({id}) => getField({id},'age_range')},
-		cover: 				{ type: coverPhotoType,
+		cover: 				{ type: fbCoverPhotoType,
 							resolve: ({id}) => getField({id},'cover')},
-		currency: 			{ type: currencyType,
+		currency: 			{ type: fbCurrencyType,
 							resolve: ({id}) => getField({id},'currency')},
-		devices:			{ type: new GraphQLList(deviceType),
+		devices:			{ type: new GraphQLList(fbDeviceType),
 							resolve: ({id}) => getField({id},'devices')},
-		education:			{ type: new GraphQLList(educationExpType),
+		education:			{ type: new GraphQLList(fbEducationExpType),
 							resolve: ({id}) => getField({id},'education')},
 		favorite_athletes:	{ 
-							type: new GraphQLList(experienceType),
+							type: new GraphQLList(fbExperienceType),
 							resolve: ({id}) => getField({id},'favorite_athletes')},
-		favorite_teams:		{ type: new GraphQLList(experienceType),
+		favorite_teams:		{ type: new GraphQLList(fbExperienceType),
 							resolve: ({id}) => getField({id},'favorite_teams')},
-		hometown:			{ type: pageType,
+		hometown:			{ type: fbPageType,
 							resolve: ({id}) => getField({id},'hometown')},
 		inspirational_people:	{ 
-							type: new GraphQLList(experienceType),
+							type: new GraphQLList(fbExperienceType),
 							resolve: ({id}) => getField({id},'inspirational_people')},
 		interested_in:		{ type: new GraphQLList(GraphQLString),
 							resolve: ({id}) => getField({id},'interested_in')},
-		languages:			{ type: new GraphQLList(experienceType),
+		languages:			{ type: new GraphQLList(fbExperienceType),
 							resolve: ({id}) => getField({id},'languages')},
-		location:			{ type: pageType,
+		location:			{ type: fbPageType,
 							resolve: ({id}) => getField({id},'location')},
 		meeting_for:		{ type: new GraphQLList(GraphQLString),
 							resolve: ({id}) => getField({id},'meeting_for')},
 		significant_other:	{ 
-							type: userType,
+							type: fbUserType,
 							resolve: ({id}) => getField({id},'significant_other')},
-		sports:				{ type: new GraphQLList(experienceType),
+		sports:				{ type: new GraphQLList(fbExperienceType),
 							resolve: ({id}) => getField({id},'sports')},
-		work:				{ type: new GraphQLList(experienceType),
+		work:				{ type: new GraphQLList(fbExperienceType),
 							resolve: ({id}) => getField({id},'work')},
 							
 		/*------------------------------------EDGES---------------------------------*/
-		albums:					{ type: new GraphQLList(albumType),
+		albums:					{ type: new GraphQLList(fbAlbumType),
 									resolve: ({id}) => getEdge({id},'albums')},
-		photos:					{ type: new GraphQLList(photoType),
+		photos:					{ type: new GraphQLList(fbPhotoType),
 									resolve: ({id}) => getEdge({id},'photos')},
-		events:					{ type: new GraphQLList(eventType),
+		events:					{ type: new GraphQLList(fbEventType),
 									resolve: ({id}) => getEdge({id},'events')},
-		locations:				{ type: new GraphQLList(locationType),
+		locations:				{ type: new GraphQLList(fbLocationType),
 									resolve: ({id}) => getEdge({id},'locations')},
-		groups:					{ type: new GraphQLList(groupType),
+		groups:					{ type: new GraphQLList(fbGroupType),
 									resolve: ({id}) => getEdge({id},'groups')},	
-		family:					{ type: new GraphQLList(userType),
+		family:					{ type: new GraphQLList(fbUserType),
 									resolve: ({id}) => getEdge({id},'family')},	
-		friends:				{ type: new GraphQLList(userType),
+		friends:				{ type: new GraphQLList(fbUserType),
 									resolve: ({id}) => getEdge({id},'friends')},
-		likes:					{ type: new GraphQLList(likeType),
+		likes:					{ type: new GraphQLList(fbLikeType),
 									resolve: ({id}) => getEdge({id},'likes')},
-		videos:					{ type: new GraphQLList(videoType),
+		videos:					{ type: new GraphQLList(fbVideoType),
 									resolve: ({id}) => getEdge({id},'videos')},
-		feed:					{ type: new GraphQLList(postType),
+		feed:					{ type: new GraphQLList(fbPostType),
 									resolve: ({id}) => getEdge({id},'feed')},
-		picture:				{ type: profilePictureType,
+		picture:				{ type: fbProfilePictureType,
 									resolve: ({id}) => getEdge({id},'picture')}
 	})
 });
 
-const ageType = new GraphQLObjectType({
-	name: 'age',
+const fbAgeType = new GraphQLObjectType({
+	name: 'fbAge',
 	description: 'Return a facebook user\'s age range.',
 	fields: () => ({
 		max:	{ type: GraphQLInt },
@@ -121,8 +121,8 @@ const ageType = new GraphQLObjectType({
 	})
 });
 
-const currencyType = new GraphQLObjectType({
-	name: 'currency',
+const fbCurrencyType = new GraphQLObjectType({
+	name: 'fbCurrency',
 	description: 'Return a facebook user\'s local currency information.',
 	fields: () => ({
 		usd_exchange: { type: GraphQLFloat},
@@ -131,8 +131,8 @@ const currencyType = new GraphQLObjectType({
 	})
 });
 
-const deviceType = new GraphQLObjectType({
-	name:'device',
+const fbDeviceType = new GraphQLObjectType({
+	name:'fbDevice',
 	description: 'return a list of devices the person is using. thiw will return only IOS and Android devices',
 	fields: ()=>({
 		hardware: { type: GraphQLString },
@@ -140,32 +140,32 @@ const deviceType = new GraphQLObjectType({
 	})
 });
 
-const educationExpType = new GraphQLObjectType({
-	name:'educationExp',
+const fbEducationExpType = new GraphQLObjectType({
+	name:'fbEducationExp',
 	description:'the person\'s education',
 	fields: ()=>({
 		id: 	{ type: GraphQLString },
-		classes: { type: new GraphQLList(experienceType) },
-		concentration:	{ type: new GraphQLList(pageType) },
-		degree:	{ type: pageType },
-		school:	{type: pageType },
+		classes: { type: new GraphQLList(fbExperienceType) },
+		concentration:	{ type: new GraphQLList(fbPageType) },
+		degree:	{ type: fbPageType },
+		school:	{type: fbPageType },
 		type:	{type: GraphQLString },
-		with:	{ type: new GraphQLList(userType) },
-		year:	{ type: new GraphQLList(pageType) }		
+		with:	{ type: new GraphQLList(fbUserType) },
+		year:	{ type: new GraphQLList(fbPageType) }		
 	})
 });
 
 //write require at the bottom to solve the circular dependency problem
-const experienceType = require('./fbExpType');
-const pageType = require('./fbPageType');
-const albumType = require('./fbAlbumType');
-const photoType = require('./fbPhotoType');
-const eventType = require('./fbEventType');
-const coverPhotoType = require('./fbCoverPhotoType');
-const locationType = require('./fbLocationType');
-const groupType = require('./fbGroupType');
-const likeType = require('./fbLikeType');
-const videoType = require('./fbVideoType');
-const postType = require('./fbPostType');
-const profilePictureType = require('./fbProfilePicType');
+const fbExperienceType = require('./fbExpType');
+const fbPageType = require('./fbPageType');
+const fbAlbumType = require('./fbAlbumType');
+const fbPhotoType = require('./fbPhotoType');
+const fbEventType = require('./fbEventType');
+const fbCoverPhotoType = require('./fbCoverPhotoType');
+const fbLocationType = require('./fbLocationType');
+const fbGroupType = require('./fbGroupType');
+const fbLikeType = require('./fbLikeType');
+const fbVideoType = require('./fbVideoType');
+const fbPostType = require('./fbPostType');
+const fbProfilePictureType = require('./fbProfilePicType');
 

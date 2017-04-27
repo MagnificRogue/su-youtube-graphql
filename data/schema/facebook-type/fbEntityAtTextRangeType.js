@@ -7,8 +7,8 @@ var {
 	GraphQLFloat
 } = require('graphql');
 
-const entityAtTextRangeType = module.exports = new GraphQLObjectType({
-	name:'entityAtTextRange',
+const fbEntityAtTextRangeType = module.exports = new GraphQLObjectType({
+	name:'fbEntityAtTextRange',
 	description:`An array containing an array of objects mentioned in the 
 	name field which contain the id, name, and type of each object as well 
 	as the offset and length which can be used to match it up with its 

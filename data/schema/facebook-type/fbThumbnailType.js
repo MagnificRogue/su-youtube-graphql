@@ -9,8 +9,8 @@ var {
 var getField = require('../../../API/fbAPI').getField;
 var getEdge = require('../../../API/fbAPI').getEdge;
 
-const thumbnailType = module.exports = new GraphQLObjectType({
-	name: 'thumbnail',
+const fbThumbnailType = module.exports = new GraphQLObjectType({
+	name: 'fbThumbnail',
 	description: 'Represents an video\'s thumbnail on Facebook.',
 	fields: () => ({
 		/*-----------------------------------field---------------------------------*/

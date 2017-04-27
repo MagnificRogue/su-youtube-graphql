@@ -18,7 +18,7 @@ const twitterQueryType = module.exports = new GraphQLObjectType({
 	description:'Query user, tweet, geolocation by keywords.',
 	fields: () => ({
 		queryUser:{
-			type: new GraphQLList(userType),
+			type: new GraphQLList(twtUserType),
 			args:{
 				q:		{ 	type:GraphQLString,
 							description:'The search query to run against people search.' 
@@ -81,7 +81,7 @@ const twitterQueryType = module.exports = new GraphQLObjectType({
 			resolve: (_,args) => searchTweet(args)
 		},
 		queryGeo: {
-			type: new GraphQLList(geoType),
+			type: new GraphQLList(twtGeoType),
 			args:{
 				query:	{	
 						type:GraphQLString,
@@ -131,8 +131,8 @@ const twitterQueryType = module.exports = new GraphQLObjectType({
 	})
 });
 
-const userType = require('./twitter-type/twtUserType');
+const twtUserType = require('./twitter-type/twtUserType');
 const tweetType = require('./twitter-type/twtTweetType');
-const geoType = require('./twitter-type/twtGeoType');
+const twtGeoType = require('./twitter-type/twtGeoType');
 
 module.exports = twitterQueryType;

@@ -4,8 +4,8 @@ var {
 	GraphQLInt
 } = require('graphql');
 
-const coverPhotoType = module.exports = new GraphQLObjectType({
-	name: 'coverPhoto',
+const fbCoverPhotoType = module.exports = new GraphQLObjectType({
+	name: 'fbCoverPhoto',
 	description: 'Return a facebook user\'s cover photo.',
 	fields: () => ({
 		id:			{ type: GraphQLString },

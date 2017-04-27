@@ -12,8 +12,8 @@ var {
 	fetchFriend
 } = require('../../../API/twitterAPI');
 
-const userType = module.exports = new GraphQLObjectType({
-	name: 'user',
+const twtUserType = module.exports = new GraphQLObjectType({
+	name: 'twtUser',
 	description: 'Return a twitter user.',
 	fields: () => ({
 		/*--------------------------basic------------------------*/
@@ -44,13 +44,13 @@ const userType = module.exports = new GraphQLObjectType({
 						resolve:(user,args) =>fetchTimeline(user,args)
 					},
 		friends:	{
-						type: new GraphQLList(userType),
+						type: new GraphQLList(twtUserType),
 						args:{count:{type:GraphQLInt,defaultValue:3}},
 						description: 'Get a list of followees of current User',
 						resolve:(user,args) => fetchFriend(user,args)
 					},
 		followers:	{	
-						type: new GraphQLList(userType),
+						type: new GraphQLList(twtUserType),
 						args:{count:{type:GraphQLInt,defaultValue:3}},
 						description: 'Get a list of followers of current User',
 						resolve:(user,args) => fetchFollower(user,args)
