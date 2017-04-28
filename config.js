@@ -50,5 +50,11 @@ var config = {};
   config.tumblr.comsumer_secret = process.env.TUMBLR_CONSUMER_SECRET;
   config.tumblr.access_token = process.env.TUMBLR_ACCESS_TOKEN;
   config.tumblr.access_token_secret = process.env.ACCESS_TOKEN_SECRET;
-    
+  
+  config.instagram = {};
+  config.instagram.access_token_key = process.env.INSTAGRAM_ACCESS_TOKEN_KEY;
+
+  config.pinterest = {};
+  config.pinterest.access_token_key = process.env.PINTEREST_ACCESS_TOKEN;
+
 module.exports = config;
