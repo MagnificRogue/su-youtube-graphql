@@ -8,8 +8,8 @@ var {
 var getField = require('../../../API/fbAPI').getField;
 var getEdge = require('../../../API/fbAPI').getEdge;
 
-const pageType = module.exports = new GraphQLObjectType({
-	name:'page',
+const fbPageType = module.exports = new GraphQLObjectType({
+	name:'fbPage',
 	description: 'return a facebook page',
 	fields: ()=>({
 		/*-----------------------------------fields--------------------------*/
@@ -73,7 +73,7 @@ const pageType = module.exports = new GraphQLObjectType({
 									resolve: ({id}) => getField({id},'influences')},
 		link: 					{ type: GraphQLString,
 									resolve: ({id}) => getField({id},'link')},
-		location: 				{ type: locationType,
+		location: 				{ type: fbLocationType,
 									resolve: ({id}) => getField({id},'location')},
 		members: 				{ type: GraphQLString,
 									resolve: ({id}) => getField({id},'members')},
@@ -134,45 +134,45 @@ const pageType = module.exports = new GraphQLObjectType({
 		written_by: 			{ type: GraphQLString,
 									resolve: ({id}) => getField({id},'written_by')},									
 		
-		best_page:				{ type: pageType,
+		best_page:				{ type: fbPageType,
 									resolve: ({id}) => getField({id},'best_page')},
-		category_list: 			{ type: new GraphQLList(pageCategoryType),
+		category_list: 			{ type: new GraphQLList(fbPageCategoryType),
 									resolve: ({id}) => getField({id},'category_list')},
-		contact_address: 		{ type: mailingAddressType,
+		contact_address: 		{ type: fbMailingAddressType,
 									resolve: ({id}) => getField({id},'contact_address')},
-		cover:					{ type: coverPhotoType,
+		cover:					{ type: fbCoverPhotoType,
 									resolve: ({id}) => getField({id},'cover')},		
-		parent_page: 			{ type: pageType,
+		parent_page: 			{ type: fbPageType,
 									resolve: ({id}) => getField({id},'parent_page')},
-		restaurant_services: 	{ type: pageRestaurantServicesType,
+		restaurant_services: 	{ type: fbPageRestaurantServicesType,
 									resolve: ({id}) => getField({id},'restaurant_services')},
-		restaurant_specialties: { type: pageRestaurantSpecialtiesType,
+		restaurant_specialties: { type: fbPageRestaurantSpecialtiesType,
 									resolve: ({id}) => getField({id},'restaurant_specialties')},
 									
 		/*---------------------------------edges----------------------*/
-		albums:					{ type: new GraphQLList(albumType),
+		albums:					{ type: new GraphQLList(fbAlbumType),
 									resolve: ({id}) => getEdge({id},'albums')},
-		photos:					{ type: new GraphQLList(photoType),
+		photos:					{ type: new GraphQLList(fbPhotoType),
 									resolve: ({id}) => getEdge({id},'photos')},
-		events:					{ type: new GraphQLList(eventType),
+		events:					{ type: new GraphQLList(fbEventType),
 									resolve: ({id}) => getEdge({id},'events')},
-		locations:				{ type: new GraphQLList(locationType),
+		locations:				{ type: new GraphQLList(fbLocationType),
 									resolve: ({id}) => getEdge({id},'locations')},
-		likes:					{ type: new GraphQLList(likeType),
+		likes:					{ type: new GraphQLList(fbLikeType),
 									resolve: ({id}) => getEdge({id},'likes')},
-		videos:					{ type: new GraphQLList(videoType),
+		videos:					{ type: new GraphQLList(fbVideoType),
 									resolve: ({id}) => getEdge({id},'videos')},
-		feed:					{ type: new GraphQLList(postType),
+		feed:					{ type: new GraphQLList(fbPostType),
 									resolve: ({id}) => getEdge({id},'feed')},	
-		picture:				{ type: profilePictureType,
+		picture:				{ type: fbProfilePictureType,
 									resolve: ({id}) => getEdge({id},'picture')},									
-		tagged:					{ type: new GraphQLList(postType),
+		tagged:					{ type: new GraphQLList(fbPostType),
 									resolve: ({id}) => getEdge({id},'tagged')}
 	})
 });
 
-const pageCategoryType = new GraphQLObjectType({
-	name:'pageCategory',
+const fbPageCategoryType = new GraphQLObjectType({
+	name:'fbPageCategory',
 	description:'The Page\'s sub-categories',
 	fields: ()=>({
 		id: 	{ type: GraphQLString },
@@ -180,13 +180,13 @@ const pageCategoryType = new GraphQLObjectType({
 	})
 })
 
-const mailingAddressType = new GraphQLObjectType({
-	name: 'mailingAddress',
+const fbMailingAddressType = new GraphQLObjectType({
+	name: 'fbMailingAddress',
 	description: 'The mailing or contact address for this page. This field will be blank if the contact address is the same as the physical address',
 	fields: ()=>({
 		id: 	{ type: GraphQLString },
 		city:	{ type: GraphQLString },
-		city_page:	{type: pageType },
+		city_page:	{type: fbPageType },
 		country: 	{ type: GraphQLString },
 		postal_code:{ type: GraphQLString },
 		region:		{ type: GraphQLString },
@@ -195,8 +195,8 @@ const mailingAddressType = new GraphQLObjectType({
 	})
 });
 
-const pageRestaurantServicesType = new GraphQLObjectType({
-	name: 'pageRestaurantServices',
+const fbPageRestaurantServicesType = new GraphQLObjectType({
+	name: 'fbPageRestaurantServices',
 	description: '',
 	fields: ()=>({
 		catering: 	{ type:GraphQLInt },
@@ -212,8 +212,8 @@ const pageRestaurantServicesType = new GraphQLObjectType({
 	})
 });
 
-const pageRestaurantSpecialtiesType = new GraphQLObjectType({
-	name: 'pageRestaurantSpecialties',
+const fbPageRestaurantSpecialtiesType = new GraphQLObjectType({
+	name: 'fbPageRestaurantSpecialties',
 	description: '',
 	fields: ()=>({
 		breakfast: 	{ type:GraphQLInt },
@@ -224,13 +224,13 @@ const pageRestaurantSpecialtiesType = new GraphQLObjectType({
 	})
 });
 
-const coverPhotoType = require('./fbCoverPhotoType');
-const userType = require('./fbUserType');
-const albumType = require('./fbAlbumType');
-const photoType = require('./fbPhotoType');
-const eventType = require('./fbEventType');
-const locationType = require('./fbLocationType');
-const postType = require('./fbPostType');
-const likeType = require('./fbLikeType');
-const videoType = require('./fbVideoType');
-const profilePictureType = require('./fbProfilePicType');
+const fbCoverPhotoType = require('./fbCoverPhotoType');
+const fbUserType = require('./fbUserType');
+const fbAlbumType = require('./fbAlbumType');
+const fbPhotoType = require('./fbPhotoType');
+const fbEventType = require('./fbEventType');
+const fbLocationType = require('./fbLocationType');
+const fbPostType = require('./fbPostType');
+const fbLikeType = require('./fbLikeType');
+const fbVideoType = require('./fbVideoType');
+const fbProfilePictureType = require('./fbProfilePicType');

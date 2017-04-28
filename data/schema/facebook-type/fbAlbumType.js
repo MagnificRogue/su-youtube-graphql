@@ -8,8 +8,8 @@ var {
 var getField = require('../../../API/fbAPI').getField;
 var getEdge = require('../../../API/fbAPI').getEdge;
 
-const albumType = module.exports = new GraphQLObjectType({
-	name: 'album',
+const fbAlbumType = module.exports = new GraphQLObjectType({
+	name: 'fbAlbum',
 	description: 'Return a facebook album.',
 	fields: () => ({
 		/*-------------------------- fields -----------------------------------*/
@@ -31,35 +31,35 @@ const albumType = module.exports = new GraphQLObjectType({
 							resolve: ({id}) => getField({id},'type')},
 		updated_time: 	{ type: GraphQLString,
 							resolve: ({id}) => getField({id},'updated_time')},
-		from:			{ type: profileType,
+		from:			{ type: fbProfileType,
 							resolve: ({id}) => getField({id},'from')},
-		place:			{ type: pageType,
+		place:			{ type: fbPageType,
 							resolve: ({id}) => getField({id},'place')},
-		cover_photo:	{ type: photoType,
+		cover_photo:	{ type: fbPhotoType,
 							resolve: ({id}) => getField({id},'cover_photo')},
-		event:			{ type: eventType,
+		event:			{ type: fbEventType,
 							resolve: ({id}) => getField({id},'event')},
 		/*-------------------------- edges ---------------------------------- */
-		photos:			{ type: new GraphQLList(photoType),
+		photos:			{ type: new GraphQLList(fbPhotoType),
 							resolve: ({id}) => getEdge({id},'photos')},
-		sharedposts:	{ type: new GraphQLList(postType),
+		sharedposts:	{ type: new GraphQLList(fbPostType),
 							resolve: ({id}) => getEdge({id},'sharedposts')},
-		likes:			{ type: new GraphQLList(likeType),
+		likes:			{ type: new GraphQLList(fbLikeType),
 							resolve: ({id}) => getEdge({id},'likes')},
-		reactions:		{ type: new GraphQLList(reactionType),
+		reactions:		{ type: new GraphQLList(fbReactionType),
 							resolve: ({id}) => getEdge({id},'reactions')},
-		comments:		{ type: new GraphQLList(commentType),
+		comments:		{ type: new GraphQLList(fbCommentType),
 							resolve: ({id}) => getEdge({id},'comments')}
 	})
 });
 
-const profileType = require('./fbProfileType');
-const userType = require('./fbUserType');
-const pageType = require('./fbPageType');
-const photoType = require('./fbPhotoType');
-const eventType = require('./fbEventType');
-const commentType = require('./fbCommentType');
-const likeType = require('./fbLikeType');
-const reactionType = require('./fbReactionType');
-const postType = require('./fbPostType');
+const fbProfileType = require('./fbProfileType');
+const fbUserType = require('./fbUserType');
+const fbPageType = require('./fbPageType');
+const fbPhotoType = require('./fbPhotoType');
+const fbEventType = require('./fbEventType');
+const fbCommentType = require('./fbCommentType');
+const fbLikeType = require('./fbLikeType');
+const fbReactionType = require('./fbReactionType');
+const fbPostType = require('./fbPostType');
 		

@@ -6,8 +6,8 @@ var {
 	GraphQLInt
 } = require('graphql');
 
-const entityType = module.exports = new GraphQLObjectType({
-	name        : 'entity',
+const twtEntityType = module.exports = new GraphQLObjectType({
+	name        : 'twtEntity',
 	description : 'entity of a tweet or user',
 	fields      : () => ({
 		/*--------------------------basic------------------------*/
@@ -29,8 +29,8 @@ const entityType = module.exports = new GraphQLObjectType({
 															return tag_list 
 														}
 							},
-		user_mentions:		{ type: new GraphQLList(userType)},
+		user_mentions:		{ type: new GraphQLList(twtUserType)},
 	  })
 });
 
-const userType = require('./twtUserType');
+const twtUserType = require('./twtUserType');
