@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 var mongoose = require('mongoose');
 
 var {
@@ -22,6 +23,17 @@ var {
 var {
 	pinterestQueryType
 } = require('./pinterestSchema');
+
+const twitterQueryType = require('./twitterSchema');
+const fbQueryType = require('./fbSchema');
+const stackExchangeQueryType = require('./stackExchangeSchema');
+const mediaWikiQueryType = require('./mediaWikiSchema');
+const flickrQueryType = require('./flickrSchema');
+const spotifyQueryType = require('./spotifySchema');
+const youtubeQueryType = require('./youtubeSchema');
+const redditQueryType = require('./redditSchema');
+const weiboQueryType = require('./weiboSchema');
+const tumblrQueryType = require('./tumblrSchema');
 
 function wrapper(){
 	return {}
@@ -97,6 +109,38 @@ const Query = new GraphQLObjectType({
 		dbTest: {
 			type: new GraphQLList(testQueryType),
 			resolve:() => promiseListAll()
+		},
+		twitter:{
+			type:twitterQueryType,
+			resolve: () => wrapper()
+			},
+		facebook:{
+			type:fbQueryType,
+			resolve: () => wrapper()
+			},
+		flickr:{
+			type: flickrQueryType,
+			resolve:() => wrapper()
+			},
+		spotify:{
+			type: spotifyQueryType,
+			resolve:() => wrapper()
+		},
+		youtube:{
+			type: youtubeQueryType,
+			resolve:() => wrapper()
+		},
+		reddit:{
+			type: redditQueryType,
+			resolve:() => wrapper()
+		},
+		weibo:{
+			type: weiboQueryType,
+			resolve:() => wrapper()
+		},
+		tumblr:{
+			type:tumblrQueryType,
+			resolve:() => wrapper()
 		},
 	})
 })
