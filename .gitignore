@@ -1,3 +1,4 @@
 node_modules
 queryCMD
 data/*.JSON
+.env

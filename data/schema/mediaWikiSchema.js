@@ -59,7 +59,7 @@ const wikiPageContentType = new GraphQLObjectType({
 
 const mediaWikiQueryType = new GraphQLObjectType({
 	name:'mediaWikiQuery',
-	description: 'query wiki page content',
+	description: 'media wiki query',
 	fields: () => ({
 		wikiPageContent : {
 			type: wikiPageContentType,
@@ -74,4 +74,7 @@ const mediaWikiQueryType = new GraphQLObjectType({
 	})
 })
 
-module.exports = mediaWikiQueryType;
+module.exports = {
+	mediaWikiQueryType
+}
+
