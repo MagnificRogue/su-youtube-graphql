@@ -7,8 +7,8 @@ var {
 	GraphQLFloat
 } = require('graphql');
 
-const fbLikeType = module.exports = new GraphQLObjectType({
-	name:'fbLike',
+const likeType = module.exports = new GraphQLObjectType({
+	name:'like',
 	description:`this reference describes the /likes edge that is common 
 	to multiple Graph API nodes. The structure and operations are the 
 	same for each node.`,
@@ -24,3 +24,6 @@ const fbLikeType = module.exports = new GraphQLObjectType({
 
 	})
 });
+
+const userType = require('./fbUserType');
+const pageType = require('./fbPageType');

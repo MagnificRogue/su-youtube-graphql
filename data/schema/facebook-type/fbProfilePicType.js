@@ -9,8 +9,8 @@ var {
 var getField = require('../../../API/fbAPI').getField;
 var getEdge = require('../../../API/fbAPI').getEdge;
 
-const fbProfilePictureType = module.exports = new GraphQLObjectType({
-	name: 'fbProfilePic',
+const profilePictureType = module.exports = new GraphQLObjectType({
+	name: 'profilePic',
 	description: 'Profile Picture.',
 	fields: () => ({
 		height:	{type:GraphQLInt},

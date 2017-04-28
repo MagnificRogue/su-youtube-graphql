@@ -9,14 +9,14 @@ var {
 } = require('graphql');
 
 
-const fbUserType = require('./fbUserType');
-const fbPageType = require('./fbPageType');
+const userType = require('./fbUserType');
+const pageType = require('./fbPageType');
 
 const resolveType = (data) => {
 	if (data.first_name){
-		return fbUserType;
+		return userType;
 	}else{
-		return fbPageType;
+		return pageType;
 	}
 };
 
@@ -24,7 +24,7 @@ const fbProfileType = module.exports = new GraphQLUnionType({
 	name: 'fbProfile',
 	description: `a list of profile node: User,Page,Group,Event,Application
 		can be keep working on e.g. userType|pageType|groupType|eventType|`,
-	types: [fbUserType, fbPageType],
+	types: [userType, pageType],
 	resolveType: resolveType
 });
 

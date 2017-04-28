@@ -13,42 +13,42 @@ const fbQueryType =  module.exports = new GraphQLObjectType({
 	description:'Query user, page, event, group, place, placetopic.',
 	fields: () => ({
 		queryUser:{
-			type: new GraphQLList(fbUserType),
+			type: new GraphQLList(userType),
 			args:{ q: { type:GraphQLString } },
 			resolve: (_,args) => search(args,'user')
 		},
 		queryPage:{
-			type: new GraphQLList(fbPageType),
+			type: new GraphQLList(pageType),
 			args:{ q: { type:GraphQLString } },
 			resolve: (_,args) => search(args,'page')
 		},
 		queryPlace: {
-			type: new GraphQLList(fbPlaceType),
+			type: new GraphQLList(placeType),
 			args:{ q: { type:GraphQLString } },
 			resolve: (_,args) => search(args,'place')
 		},
 		queryEvent: {
-			type: new GraphQLList(fbEventType),
+			type: new GraphQLList(eventType),
 			args:{ q: { type:GraphQLString } },
 			resolve: (_,args) => search(args,'event')
 		},
 		queryGroup: {
-			type: new GraphQLList(fbGroupType),
+			type: new GraphQLList(groupType),
 			args:{ q: { type:GraphQLString } },
 			resolve: (_,args) => search(args,'group')
 		},
 		queryPlaceTopic:{
-			type: new GraphQLList(fbPlaceTopicType),
+			type: new GraphQLList(placeTopicType),
 			args:{ q: { type:GraphQLString } },
 			resolve: (_,args) => search(args,'placetopic')
 		}
 	})
 });
 
-const fbUserType = require('./facebook-type/fbUserType');
-const fbPageType = require('./facebook-type/fbPageType');
-const fbEventType = require('./facebook-type/fbEventType');
-const fbPlaceType = require('./facebook-type/fbPlaceType');
-const fbGroupType = require('./facebook-type/fbGroupType');
-const fbPlaceTopicType = require('./facebook-type/fbPlaceTopicType');
+const userType = require('./facebook-type/fbUserType');
+const pageType = require('./facebook-type/fbPageType');
+const eventType = require('./facebook-type/fbEventType');
+const placeType = require('./facebook-type/fbPlaceType');
+const groupType = require('./facebook-type/fbGroupType');
+const placeTopicType = require('./facebook-type/fbPlaceTopicType');
 

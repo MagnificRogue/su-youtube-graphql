@@ -4,18 +4,18 @@ var {
 	GraphQLString
 } = require('graphql');
 
-const fbExperienceType = module.exports = new GraphQLObjectType({
-	name:'fbExperience',
+const experienceType = module.exports = new GraphQLObjectType({
+	name:'experience',
 	description: 'experience',
 	fields: ()=>({
 		id: { type: GraphQLString },
 		description: { type: GraphQLString },
-		from: { type: fbPageType },
+		from: { type: pageType },
 		name: { type: GraphQLString },
-		with: { type: new GraphQLList(fbUserType) }		
+		with: { type: new GraphQLList(userType) }		
 	})
 });
 
-const fbUserType = require('./fbUserType');
-const fbPageType = require('./fbPageType');
+const userType = require('./fbUserType');
+const pageType = require('./fbPageType');
 //const profileType = require('./fbProfileType');

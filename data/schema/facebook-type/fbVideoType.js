@@ -9,8 +9,8 @@ var {
 var getField = require('../../../API/fbAPI').getField;
 var getEdge = require('../../../API/fbAPI').getEdge;
 
-const fbVideoType = module.exports = new GraphQLObjectType({
-	name: 'fbVideo',
+const videoType = module.exports = new GraphQLObjectType({
+	name: 'video',
 	description: 'Represents an individual video on Facebook.',
 	fields: () => ({
 		/*-----------------------------------fields--------------------------*/
@@ -26,12 +26,12 @@ const fbVideoType = module.exports = new GraphQLObjectType({
 		id:							{type:GraphQLString},
 		backdated_time:				{type:GraphQLString,
 										resolve: ({id}) => getField({id},'backdated_time')},
-		event:						{type:fbEventType,
+		event:						{type:eventType,
 										resolve: ({id}) => getField({id},'event')},
-		format:						{type: new GraphQLList(fbVideoFormatType),
+		format:						{type: new GraphQLList(videoFormatType),
 										resolve: ({id}) => getField({id},'format')},
 		from:						{// profile
-										type:fbProfileType,
+										type:profileType,
 										resolve: ({id}) => getField({id},'from')},
 		icon:						{type:GraphQLString,
 										resolve: ({id}) => getField({id},'icon')},
@@ -41,7 +41,7 @@ const fbVideoType = module.exports = new GraphQLObjectType({
 										resolve: ({id}) => getField({id},'permalink_url')},
 		picture:					{type:GraphQLString,
 										resolve: ({id}) => getField({id},'picture')},
-		place:						{type:fbPlaceType,
+		place:						{type:placeType,
 										resolve: ({id}) => getField({id},'place')},
 		source:						{type:GraphQLString,
 										resolve: ({id}) => getField({id},'source')},
@@ -51,26 +51,26 @@ const fbVideoType = module.exports = new GraphQLObjectType({
 										resolve: ({id}) => getField({id},'universal_video_id')},
 		updated_time:				{type:GraphQLString},
 		/*---------------------------------edges----------------------*/
-		captions:					{ type: new GraphQLList(fbVideoCaptionType),
+		captions:					{ type: new GraphQLList(videoCaptionType),
 										resolve: ({id}) => getEdge({id},'captions')},
-		comments:					{ type: new GraphQLList(fbCommentType),
+		comments:					{ type: new GraphQLList(commentType),
 										resolve: ({id}) => getEdge({id},'comments')},
-		likes:						{ type: new GraphQLList(fbLikeType),
+		likes:						{ type: new GraphQLList(likeType),
 										resolve: ({id}) => getEdge({id},'likes')},
-		reactions:					{ type: new GraphQLList(fbReactionType),
+		reactions:					{ type: new GraphQLList(reactionType),
 										resolve: ({id}) => getEdge({id},'reactions')},
-		sharedposts:				{ type: new GraphQLList(fbPostType),
+		sharedposts:				{ type: new GraphQLList(postType),
 										resolve: ({id}) => getEdge({id},'sharedposts')},
-		sponsor_tags:				{ type: new GraphQLList(fbPageType),
+		sponsor_tags:				{ type: new GraphQLList(pageType),
 										resolve: ({id}) => getEdge({id},'sponsor_tags')},
-		tags:						{ type: new GraphQLList(fbTaggableSubjectType2),
+		tags:						{ type: new GraphQLList(taggableSubjectType2),
 										resolve: ({id}) => getEdge({id},'tags')},
-		thumbnails:					{ type: new GraphQLList(fbThumnailType),
+		thumbnails:					{ type: new GraphQLList(thumnailType),
 										resolve: ({id}) => getEdge({id},'thumbnails')}
 	})
 });
-const fbTaggableSubjectType2 = new GraphQLObjectType({
-	name:'fbTaggableSubject2',
+const taggableSubjectType2 = new GraphQLObjectType({
+	name:'taggableSubject2',
 	description:'Represents an object can be tagged in some content',
 	fields:()=>({
 		id:				{type:GraphQLString},
@@ -78,8 +78,8 @@ const fbTaggableSubjectType2 = new GraphQLObjectType({
 		created_time:	{type:GraphQLString}
 	})
 });
-const fbVideoFormatType = new GraphQLObjectType({
-	name:'fbVideoFormat',
+const videoFormatType = new GraphQLObjectType({
+	name:'videoFormat',
 	description:'The different formats of the video.',
 	fields: ()=>({
 		embed_html:	{type:GraphQLString},
@@ -89,8 +89,8 @@ const fbVideoFormatType = new GraphQLObjectType({
 		width:		{type:GraphQLInt}
 	})
 });
-const fbVideoCaptionType = new GraphQLObjectType({
-	name:'fbVideoCaption',
+const videoCaptionType = new GraphQLObjectType({
+	name:'videoCaption',
 	description:'Captions for the video.',
 	fields: ()=>({
 		created_time:	{type:GraphQLInt},
@@ -99,15 +99,15 @@ const fbVideoCaptionType = new GraphQLObjectType({
 		url:			{type:GraphQLString}		
 	})	
 });
-const fbEventType = require('./fbEventType');
-const fbUserType = require('./fbUserType');
-const fbPlaceType = require('./fbPlaceType');
-const fbCommentType = require('./fbCommentType');
-const fbLikeType = require('./fbLikeType');
-const fbReactionType = require('./fbReactionType');
-const fbPostType = require('./fbPostType');
-const fbPageType = require('./fbPageType');
-const fbThumnailType = require('./fbThumbnailType');
-const fbProfileType = require('./fbProfileType');
+const eventType = require('./fbEventType');
+const userType = require('./fbUserType');
+const placeType = require('./fbPlaceType');
+const commentType = require('./fbCommentType');
+const likeType = require('./fbLikeType');
+const reactionType = require('./fbReactionType');
+const postType = require('./fbPostType');
+const pageType = require('./fbPageType');
+const thumnailType = require('./fbThumbnailType');
+const profileType = require('./fbProfileType');
 //console.log(profileType);
 

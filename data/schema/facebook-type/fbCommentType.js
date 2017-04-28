@@ -9,8 +9,8 @@ var {
 var getField = require('../../../API/fbAPI').getField;
 var getEdge = require('../../../API/fbAPI').getEdge;
 
-const fbCommentType = module.exports = new GraphQLObjectType({
-	name:'fbComment',
+const commentType = module.exports = new GraphQLObjectType({
+	name:'comment',
 	description:`A comment can be made on various types of content
 	on Facebook. Most Graph API nodes have a /comments edge that 
 	lists all the comments on that object. The /{comment-id} node
@@ -18,29 +18,29 @@ const fbCommentType = module.exports = new GraphQLObjectType({
 	fields: ()=>({
 		/*-----------------------------------fields------------------------------*/
 		id:				{ type: GraphQLString},
-		attachment:		{ type: fbAttachmentType,
+		attachment:		{ type: attachmentType,
 							resolve: ({id}) => getField({id},'attachment')},
 		comment_count:	{ type: GraphQLInt,
 							resolve: ({id}) => getField({id},'comment_count')},
 		created_time:	{ type: GraphQLString,
 							resolve: ({id}) => getField({id},'created_time')},
-		from:			{ type: fbProfileType,
+		from:			{ type: profileType,
 							resolve: ({id}) => getField({id},'from')},
 		like_count:		{ type: GraphQLInt,
 							resolve: ({id}) => getField({id},'like_count')},
 		message:		{ type: GraphQLString,
 							resolve: ({id}) => getField({id},'message')},
-		parent:			{ type: fbCommentType,
+		parent:			{ type: commentType,
 							resolve: ({id}) => getField({id},'parent')},
 		/*----------------------------------edges-------------------------------*/
-		likes:			{ type: new GraphQLList(fbLikeType),	
+		likes:			{ type: new GraphQLList(likeType),	
 								resolve: ({id}) => getEdge({id},'likes')},
-		comments:		{ type: new GraphQLList(fbCommentType),
+		comments:		{ type: new GraphQLList(commentType),
 								resolve: ({id}) => getEdge({id},'comments')}
 	})
 });
 
-const fbProfileType = require('./fbProfileType');
-const fbEntityAtTextRangeType = require('./fbEntityAtTextRangeType');
-const fbLikeType = require('./fbLikeType');
-const fbAttachmentType = require('./fbAttachmentType');
+const profileType = require('./fbProfileType');
+const entityAtTextRangeType = require('./fbEntityAtTextRangeType');
+const likeType = require('./fbLikeType');
+const attachmentType = require('./fbAttachmentType');

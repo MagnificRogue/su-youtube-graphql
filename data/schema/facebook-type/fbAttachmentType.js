@@ -9,12 +9,12 @@ var {
 var getField = require('../../../API/fbAPI').getField;
 var getEdge = require('../../../API/fbAPI').getEdge;
 
-const fbAttachmentType = module.exports = new GraphQLObjectType({
-	name: 'fbAttachment',
+const attachmentType = module.exports = new GraphQLObjectType({
+	name: 'attachment',
 	description: 'Media content associated with a story or comment. Story attachments are accessed from the following endpoints:',
 	fields: () => ({
 		description:		{type: GraphQLString},
-		description_tags:	{type: new GraphQLList(fbUserType)},
+		description_tags:	{type: new GraphQLList(userType)},
 		media:				{type: GraphQLString},
 		title:				{type: GraphQLString},
 		type:				{type: GraphQLString},
@@ -22,4 +22,4 @@ const fbAttachmentType = module.exports = new GraphQLObjectType({
 	})
 });
 
-const fbUserType = require('./fbUserType');
+const userType = require('./fbUserType');

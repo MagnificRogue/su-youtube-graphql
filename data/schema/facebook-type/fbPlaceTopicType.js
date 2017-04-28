@@ -9,8 +9,8 @@ var {
 var getField = require('../../../API/fbAPI').getField;
 var getEdge = require('../../../API/fbAPI').getEdge;
 
-const fbPlaceTopicType = module.exports = new GraphQLObjectType({
-	name: 'fbPlaceTopic',
+const placeTopicType = module.exports = new GraphQLObjectType({
+	name: 'placeTopic',
 	description: 'Reading the category of a place Page.',
 	fields: () => ({
 	/*------------------------------fields-------------------------------*/
