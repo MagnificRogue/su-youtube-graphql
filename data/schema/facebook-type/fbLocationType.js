@@ -6,8 +6,8 @@ var {
 	GraphQLFloat
 } = require('graphql');
 
-const locationType = module.exports = new GraphQLObjectType({
-	name:'location',
+const fbLocationType = module.exports = new GraphQLObjectType({
+	name:'fbLocation',
 	description:'Location of Place',
 	fields: () =>({
 		city:			{ type: GraphQLString },

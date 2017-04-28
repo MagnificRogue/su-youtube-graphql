@@ -21,12 +21,12 @@ const retweetType = module.exports = new GraphQLObjectType({
 		favorite_count: 			{ type: GraphQLInt },
 		retweet_count: 				{ type: GraphQLInt },
 		/*--------------------------nested------------------------*/
-		entities:					{ type: entityType },
+		entities:					{ type: twtEntityType },
 		retweeted_status: 			{ type: tweetType },
-		user: 						{ type: userType }
+		user: 						{ type: twtUserType }
 	  })
 });
 
-const userType = require('./twtUserType');
-const entityType = require('./twtEntityType');
+const twtUserType = require('./twtUserType');
+const twtEntityType = require('./twtEntityType');
 const tweetType = require('./twtTweetType');
