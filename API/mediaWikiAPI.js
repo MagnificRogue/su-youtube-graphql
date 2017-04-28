@@ -26,6 +26,7 @@ function mediaWiki(args, fname){
             
             if(response) {
                 console.log("send response data back")
+                console.log(response.body)
                 resolve(JSON.parse(response.body)); 
             }
         });
@@ -44,4 +45,3 @@ function wikiPageContent(args, queryUrl){
 module.exports = {
   mediaWiki
 }
-
