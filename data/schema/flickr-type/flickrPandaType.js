@@ -16,8 +16,8 @@ const flickrPandaType = module.exports = new GraphQLObjectType({
 		_content: 	{type: GraphQLString},
 		photos: 	{type: new GraphQLList(flickrPhotoType),
 						args:{
-							page: 		{type:GraphQLInt, defaultvalue:1},
-							per_page:	{type:GraphQLInt, defaultvalue:10}
+							page: 		{type:GraphQLInt, defaultValue:1},
+							per_page:	{type:GraphQLInt, defaultValue:10}
 						},
 						resolve:({_content},args) => getPandaPhotos(_content,args)}
 	})
