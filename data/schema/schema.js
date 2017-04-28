@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 var mongoose = require('mongoose');
 
 var {
@@ -26,8 +25,6 @@ var {
 
 const twitterQueryType = require('./twitterSchema');
 const fbQueryType = require('./fbSchema');
-const stackExchangeQueryType = require('./stackExchangeSchema');
-const mediaWikiQueryType = require('./mediaWikiSchema');
 const flickrQueryType = require('./flickrSchema');
 const spotifyQueryType = require('./spotifySchema');
 const youtubeQueryType = require('./youtubeSchema');

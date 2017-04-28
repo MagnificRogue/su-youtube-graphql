@@ -22,10 +22,21 @@
     "promise": "^7.1.1",
     "pug": "~2.0.0-beta10",
     "request": "^2.81.0",
-    "serve-favicon": "~2.3.2"
+    "serve-favicon": "~2.3.2",
+    "snoowrap": "^1.13.0",
+    "spotify-web-api-node": "^2.3.6",
+    "tumblr": "^0.4.1",
+    "tumblr.js": "^1.1.1",
+    "twitter": "^1.7.0",
+    "node-flickr": "^1.0.0",
+    "nodeweibo": "^2.0.4",
+    "fb": "^1.1.1",
+    "googleapis": "^19.0.0"
   },
   "devDependencies": {
     "babel-preset-node6": "^11.0.0",
-    "nodemon": "^1.11.0"
+    "nodemon": "^1.11.0",
+    "concurrently": "^3.4.0",
+    "react-scripts": "0.9.5"
   }
 }
