@@ -63,8 +63,8 @@ const flickrPhotoType = module.exports = new GraphQLObjectType({
 		galleriesOf:		{type: new GraphQLList(flickrGalleryType),
 							description:'Return the list of galleries to which a photo has been added. Galleries are returned sorted by date which the photo was added to the gallery.',
 							args: {
-							page: 		{type:GraphQLInt, defaultvalue:1},
-							per_page:	{type:GraphQLInt, defaultvalue:10}},
+							page: 		{type:GraphQLInt, defaultValue:1},
+							per_page:	{type:GraphQLInt, defaultValue:10}},
 						resolve: ({id},args) => flickrAPI(endpoint = "galleries.getListForPhoto", addon = {"photo_id":id}, args = args,resolveName='galleriesOf')},
 	})
 });

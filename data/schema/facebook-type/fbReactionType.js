@@ -9,8 +9,8 @@ var {
 var getField = require('../../../API/fbAPI').getField;
 var getEdge = require('../../../API/fbAPI').getEdge;
 
-const reactionType = module.exports = new GraphQLObjectType({
-	name: 'reaction',
+const fbReactionType = module.exports = new GraphQLObjectType({
+	name: 'fbReaction',
 	description: 'type enum {NONE, LIKE, LOVE, WOW, HAHA, SAD, ANGRY, THANKFUL}.',
 	fields: () => ({
 		id: {type: GraphQLString},
