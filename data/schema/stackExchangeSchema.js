@@ -112,7 +112,4 @@ const stackExchangeQueryType = new GraphQLObjectType({
 	})
 })
 
-module.exports = {
-	stackExchangeQueryType
-}
-
+module.exports = stackExchangeQueryType;
