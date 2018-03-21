@@ -1,39 +1,90 @@
-var config = require('../config');
-var Promise = require('promise');
-const snoowrap = require('snoowrap');
+var Promise = require('bluebird');
 
-const r = new snoowrap({
-	userAgent: 	config.reddit.userAgent,
-	clientId:  	config.reddit.client_id,
-	clientSecret:	config.reddit.client_secret,
-	username:		config.reddit.username,
-	password:		config.reddit.password
-});
+function redditAPI(tokens,resolveName, id, args){
 
-function redditAPI(resolveName, id, args){
+	const redditTokens = tokens.find((authorization) => {
+		return authorization.provider === 'reddit';
+	});
+
+	const snoowrap = require('snoowrap');
+	const r = new snoowrap({
+			userAgent: 	'social monitoring research',
+			accessToken: redditTokens.access_token,
+			refreshToken: redditTokens.refresh_token,
+			clientId: redditTokens.client.client_id,
+			clientSecret: redditTokens.client.client_secret
+	});
+
+
 	return new Promise((resolve,reject) =>{
+		console.log(resolveName)
 		switch(resolveName){
+			case 'search':
+				args['limit'] = args['count'];
+				r.search(args).then((listing) =>  {
+						console.log(listing);
+						resolve(listing);
+					})
+					.catch((err) =>{
+						console.log(err);
+						reject(err)
+					})
+				break;
+				
+			case 'getCompleteReplies':
+				r.getSubmission(id).expandReplies({options:{limit:Infinity,depth:Infinity}}).then(data =>  {
+						agg_comments = [];
+						for (var i = 0, length=data.comments.length; i< length; i++){
+							commentTreeFlaten(data.comments[i]);
+						}
+						resolve(agg_comments);
+					}).catch((err) => { console.log(err); resolve([]);});
+				break;
+				
 			case 'searchSubreddits':
+				args['limit'] = 1000;
 				r.searchSubreddits(args).then((listing) =>  {
-					listing.fetchMore({amount:args['extra']}).then((data) =>{
+				listing.fetchAll().then((data) =>{
 						resolve(data);
 					})
 					.catch((err) =>{
 						reject(err)
 					})
+				})
+				.catch((err) =>{
+					reject(err);
 				});
 				break;
+			
+			case 'getNewComments':
+				if (args['subredditName'] === 'ALL'){
+					args['subredditName'] = '';
+				}
+				r.getSubreddit(args['subredditName']).getNewComments({limit:1000}).then((listing) =>  {
+					listing.fetchMore({amount:args['extra'],skipReplies:false,append:true}).then((data) => {
+						resolve(data);
+					})
+					.catch((err) =>{
+						reject(err)
+					})
+				})
+				.catch((err) =>{
+					reject(err);
+				});
+				break;	
 				
 			case 'searchSubredditNames':
 				r.searchSubredditNames(args).then((data) =>{
 					resolve(data);
 				})
 				.catch((err) =>{
+					console.log('ERR')
 					reject(err)
 				});
 				break;
 				
 			case 'searchSubredditTopics':
+				args['limit'] = 1000;
 				r.searchSubredditTopics(args).then((data) =>{
 						resolve(data);
 					})
@@ -50,6 +101,9 @@ function redditAPI(resolveName, id, args){
 					.catch((err) =>{
 						reject(err)
 					})
+				})
+				.catch((err) =>{
+					reject(err);
 				});
 				break;
 			
@@ -61,6 +115,9 @@ function redditAPI(resolveName, id, args){
 					.catch((err) =>{
 						reject(err)
 					})
+				})
+				.catch((err) =>{
+					reject(err);
 				});
 				break;
 				
@@ -72,6 +129,9 @@ function redditAPI(resolveName, id, args){
 					.catch((err) =>{
 						reject(err)
 					})
+				})
+				.catch((err) =>{
+					reject(err);
 				});
 				break;
 				
@@ -83,17 +143,9 @@ function redditAPI(resolveName, id, args){
 					.catch((err) =>{
 						reject(err)
 					})
-				});
-				break;
-			
-			case 'search':
-				r.search(args).then((listing) =>  {
-					listing.fetchMore({amount:args['extra']}).then((data) => {
-						resolve(data);
-					})
-					.catch((err) =>{
-						reject(err)
-					})
+				})
+				.catch((err) =>{
+					reject(err);
 				});
 				break;
 				
@@ -105,6 +157,9 @@ function redditAPI(resolveName, id, args){
 					.catch((err) =>{
 						reject(err)
 					})
+				})
+				.catch((err) =>{
+					reject(err);
 				});
 				break;
 			
@@ -116,6 +171,9 @@ function redditAPI(resolveName, id, args){
 					.catch((err) =>{
 						reject(err)
 					})
+				})
+				.catch((err) =>{
+					reject(err);
 				});
 				break;
 			
@@ -127,6 +185,9 @@ function redditAPI(resolveName, id, args){
 					.catch((err) =>{
 						reject(err)
 					})
+				})
+				.catch((err) =>{
+					reject(err);
 				});
 				break;
 				
@@ -138,6 +199,9 @@ function redditAPI(resolveName, id, args){
 					.catch((err) =>{
 						reject(err)
 					})
+				})
+				.catch((err) =>{
+					reject(err);
 				});
 				break;
 				
@@ -149,19 +213,12 @@ function redditAPI(resolveName, id, args){
 					.catch((err) =>{
 						reject(err)
 					})
+				})
+				.catch((err) =>{
+					reject(err);
 				});
 				break;
 				
-			case 'getNewComments':
-				r.getNewComments(args).then((listing) =>  {
-					listing.fetchMore({amount:args['extra']}).then((data) => {
-						resolve(data);
-					})
-					.catch((err) =>{
-						reject(err)
-					})
-				});
-				break;
 				
 			case 'trophy':
 				r.getUser(id).getTrophies().then((data) => {
@@ -180,6 +237,9 @@ function redditAPI(resolveName, id, args){
 					.catch((err) =>{
 						reject(err)
 					})
+				})
+				.catch((err) =>{
+					reject(err);
 				});
 				break;
 			
@@ -191,6 +251,9 @@ function redditAPI(resolveName, id, args){
 					.catch((err) =>{
 						reject(err)
 					})
+				})
+				.catch((err) =>{
+					reject(err);
 				});
 				break;
 				
@@ -202,6 +265,9 @@ function redditAPI(resolveName, id, args){
 					.catch((err) =>{
 						reject(err)
 					})
+				})
+				.catch((err) =>{
+					reject(err);
 				});
 				break;
 				
@@ -214,6 +280,9 @@ function redditAPI(resolveName, id, args){
 					.catch((err) =>{
 						reject(err)
 					})
+				})
+				.catch((err) =>{
+					reject(err);
 				});
 				break;
 				
@@ -225,19 +294,29 @@ function redditAPI(resolveName, id, args){
 					.catch((err) =>{
 						reject(err)
 					})
+				})
+				.catch((err) =>{
+					reject(err);
 				});
 				break;
 				
-			/*case 'expansion':
-				r.getSubmission(id).expandReplies({options:{args}}).then((listing) =>  {
-					listing.fetchMore({amount:args['extra']}).then((data) => {
-						console.log(data);
-						resolve(data);
-					})
+			case 'expansion':
+				agg_comments = [];
+				r.getSubmission(id).expandReplies({options:{limit:Infinity,depth:Infinity}}).then(data =>  {
+						
+					//console.log(data.comments.length);
+					for (var i = 0, length=data.comments.length; i< length; i++){
+						commentTreeFlaten(data.comments[i]);
+					}
+					resolve(agg_comments);
+						
+				})
+				.catch((err) =>{
+					reject(err);
 				});
-				break;
-			
-			case 'getUserFlairTemplates':
+				break;	
+				
+			/*case 'getUserFlairTemplates':
 				r.getSubreddit(id).getUserFlairTemplates().then((data) => {
 						//console.log(data);
 						resolve(data);
@@ -260,6 +339,18 @@ function redditAPI(resolveName, id, args){
 						resolve(data);
 					})
 				});
+				break;
+			
+			case 'comment':
+				r.getUser(id).getComments().then((listing) =>  {
+					args['limit'] = 1;
+					listing.fetchMore({amount:0}).then((data) => {
+						resolve(data);
+					})
+					.catch((err) =>{
+						reject(err)
+					})
+				});
 				break;*/
 				
 				
@@ -268,6 +359,33 @@ function redditAPI(resolveName, id, args){
 				resolve(null);
 		}
 	});
+}
+
+/*---------------------helper function---------------------------*/
+function commentTreeFlaten(o){
+		
+		currentNode = o;
+		if (currentNode !== null && currentNode['replies']!== null){
+			var children = currentNode['replies'];
+			delete currentNode['replies'];
+			agg_comments.push(currentNode);
+			
+			for (var i=0, length =children.length; i< length; i++){
+				commentTreeFlaten(children[i])
+			}
+		}else if (currentNode !== null && currentNode['replies'] === null){
+			var children = currentNode['replies'];
+			delete currentNode['replies'];
+			agg_comments.push(currentNode);
+		}
+		
+}
+
+function wait(ms){
+	var start = Date.now(), now = start;
+	while(now - start < ms){
+		now = Date.now();
+	}
 }
 
 module.exports = redditAPI;

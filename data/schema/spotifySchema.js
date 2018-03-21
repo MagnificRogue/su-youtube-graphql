@@ -34,7 +34,7 @@ const spotifyQueryType = module.exports = new GraphQLObjectType({
 							Maximum offset: 100.000. Use with limit to get the next page of search results.`
 							}
 					},
-			resolve:(_,args) =>spotifyAPI( resolveName='searchTracks',id='', args = args)},
+			resolve:(_,args,context) =>spotifyAPI( context,resolveName='searchTracks',id='', args = args)},
 			
 		searchArtists:{
 			type: new GraphQLList(spotifyArtistType),
@@ -57,7 +57,7 @@ const spotifyQueryType = module.exports = new GraphQLObjectType({
 							Maximum offset: 100.000. Use with limit to get the next page of search results.`
 							}
 					},
-			resolve:(_,args) =>spotifyAPI( resolveName='searchArtists',id='',args = args)},
+			resolve:(_,args,context) =>spotifyAPI(context,resolveName='searchArtists',id='',args = args)},
 			
 		searchPlaylists:{
 			type: new GraphQLList(spotifyPlaylistType),
@@ -80,7 +80,7 @@ const spotifyQueryType = module.exports = new GraphQLObjectType({
 							Maximum offset: 100.000. Use with limit to get the next page of search results.`
 							}
 					},
-			resolve:(_,args) =>spotifyAPI( resolveName='searchPlaylists',id='', args = args)},
+			resolve:(_,args,context) =>spotifyAPI( context,resolveName='searchPlaylists',id='', args = args)},
 			
 		searchAlbums:{
 			type: new GraphQLList(spotifyAlbumType),
@@ -103,12 +103,12 @@ const spotifyQueryType = module.exports = new GraphQLObjectType({
 							Maximum offset: 100.000. Use with limit to get the next page of search results.`
 							}
 					},
-			resolve:(_,args) =>spotifyAPI( resolveName='searchAlbums',id='', args = args)},
+			resolve:(_,args,context) =>spotifyAPI(context,resolveName='searchAlbums',id='', args = args)},
 		
 		getUser:{
 			type:spotifyUserType,
 			args:	{user_id: {type:GraphQLString}},
-			resolve: (_,args) =>spotifyAPI( resolveName='getUser',id='',args = args)},
+			resolve: (_,args,context) =>spotifyAPI(context,resolveName='getUser',id='',args = args)},
 		
 		browseFeaturedPlaylists:{
 			type:new GraphQLList(spotifyPlaylistType),
@@ -125,7 +125,7 @@ const spotifyQueryType = module.exports = new GraphQLObjectType({
 				limit:		{type:GraphQLInt, defaultValue:20},
 				offset:		{type:GraphQLInt, defaultValue:0},
 			},
-			resolve:(_,args) => spotifyAPI( resolveName = 'browseFeaturedPlaylists', id='',args=args)},
+			resolve:(_,args,context) => spotifyAPI(context,resolveName = 'browseFeaturedPlaylists', id='',args=args)},
 		
 		browseNewReleases:{
 			type:new GraphQLList(spotifyAlbumType),
@@ -135,7 +135,7 @@ const spotifyQueryType = module.exports = new GraphQLObjectType({
 					limit:		{type:GraphQLInt, defaultValue:20},
 					offset:		{type:GraphQLInt, defaultValue:0},
 				},
-			resolve:(_,args) => spotifyAPI( resolveName = 'browseNewReleases', id='',args=args)},
+			resolve:(_,args,context) => spotifyAPI(context, resolveName = 'browseNewReleases', id='',args=args)},
 			
 		browseCategories:{
 			type:new GraphQLList(spotifyCategoryType),
@@ -151,7 +151,7 @@ const spotifyQueryType = module.exports = new GraphQLObjectType({
 				limit:		{type:GraphQLInt, defaultValue:20},
 				offset:		{type:GraphQLInt, defaultValue:0},
 			},
-			resolve: (_,args) => spotifyAPI( resolveName = 'browsweCategories',id='',args = args)},
+			resolve: (_,args,context) => spotifyAPI(context,resolveName = 'browsweCategories',id='',args = args)},
 	})
 });
 

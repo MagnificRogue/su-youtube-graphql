@@ -8,6 +8,7 @@ var {
 	GraphQLBoolean
 } = require('graphql');
 var redditAPI = require('../../../API/redditAPI');
+var replyLoader = require('../../../API/loader');
 
 const redditLinkType = module.exports = new GraphQLObjectType({
 	name:'redditLink',
@@ -76,7 +77,9 @@ const redditLinkType = module.exports = new GraphQLObjectType({
 		user_reports:			{type:new GraphQLList(GraphQLString)},
 		visited:				{type:GraphQLBoolean},	
 		/*--------------------------nested------------------------*/
-		author_trophy:			{type:new GraphQLList(redditTrophyType),
+		replies:				{type:new GraphQLList(redditCommentType),
+									resolve: ({id},_,context) => replyLoader.load( JSON.stringify({'id':id,'token':context['redditaccesstoken']}) )} // @ REFACTOR
+		/*author_trophy:			{type:new GraphQLList(redditTrophyType),
 									resolve: ({author}) => redditAPI(resolveName='trophy', id=author.name, args={})},
 		author_overview:		{type:new GraphQLList(redditOverviewType),
 									args:{extra:{type:GraphQLInt, defaultValue:0}},
@@ -92,13 +95,8 @@ const redditLinkType = module.exports = new GraphQLObjectType({
 									resolve: ({author},args) => redditAPI(resolveName='upvote', id=author.name, args=args)},
 		author_downvote:		{type:new GraphQLList(redditOverviewType),
 									args:{extra:{type:GraphQLInt, defaultValue:0}},
-									resolve: ({author},args) => redditAPI(resolveName='downvote', id=author.name, args=args)},
-		/*expand_replies:			{type:new GraphQLList(redditCommentType),
-									args:{
-										limit: {type:GraphQLInt},
-										depth: {type:GraphQLInt},
-									},
-									resolve: ({id},args) => redditAPI(resolveName='expansion',id=id,args=args)},*/
+									resolve: ({author},args) => redditAPI(resolveName='downvote', id=author.name, args=args)},*/
+		
 	})
 });
 

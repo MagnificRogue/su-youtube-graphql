@@ -1,40 +1,41 @@
-var config = require('../config');
+require('dotenv').config();
 var Promise = require('promise');
 var google = require('googleapis');
 var OAuth2 = google.auth.OAuth2;
-var oauth2Client = new OAuth2(
-  config.youtube.client_id,
-  config.youtube.client_secret,
-  config.youtube.callback
-);
+var oauth2Client = new OAuth2();
 
-oauth2Client.setCredentials({
-  access_token: config.youtube.access_token,
-  refresh_token: config.youtube.refresh_token
-});
+function youtubeAPI(tokens, resolveName, id, args){
+	
+	const youtubeTokens = tokens.find((authorization) => {
+		return authorization.provider === 'youtube';
+	});
 
-var youtube = google.youtube({
-	version: 'v3',
-	auth:oauth2Client
-});
+	oauth2Client.setCredentials({
+	  access_token: youtubeTokens.access_token,
+	  refresh_token: youtubeTokens.refresh_token,
+		//expiry_date: true
+	});
 
-function youtubeAPI(resolveName, id, args){
+	var youtube = google.youtube({
+		version: 'v3',
+		auth:oauth2Client
+	});
+	
 	return new Promise((resolve,reject) =>{
 		
 		switch(resolveName){
 			case 'search':
-				console.log(args)
 				youtube.search.list({
 					part: 				'id,snippet',
-					key: 				config.youtube.api_key,
-					maxResults:			args['maxResults'],
-					order:				args['order'],
-					publishedAfter:		args['publishedAfter'],
-					publishedBefore:	args['publishedBefore'],
+					maxResults:			args['maxResults'] ? args['maxResults'] : 50,
+					order:				args['order'] ? args['order'] : 'relevance',
+					publishedAfter:		args['publishedAfter'] ? args['publishedAfter'] : '',
+					publishedBefore:	args['publishedBefore'] ? args['publishedBefore'] : '',
 					q: 					args['q'],
-					type:				args['type'],
+					type:				args['type'] ? args['type'] : 'video',
 				  }, (error, data) => {
 					if (error){
+						console.log('ERROR!')
 						console.log(error);
 						reject(error);
 					}else{

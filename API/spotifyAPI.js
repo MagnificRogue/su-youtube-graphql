@@ -1,22 +1,13 @@
-var config = require('../config');
+require('dotenv').config();
 var Promise = require('promise');
 var SpotifyWebApi = require('spotify-web-api-node');
 
-// this library already return a promise, no need to wrap them in another promise
-var spotify = new SpotifyWebApi({
-  clientId : config.spotify.client_id,
-  clientSecret : config.spotify.client_secret,
-  redirectUri : config.spotify.callback
-});
-spotify.clientCredentialsGrant()
-  .then(function(data) {
-    spotify.setAccessToken(data.body['access_token']);
-	//console.log(data.body['access_token']);
-  }, function(err) {
-        console.log('Something went wrong when retrieving an access token', err);
-  });
-
-function spotifyAPI(resolveName, id, args){
+function spotifyAPI(tokens,resolveName, id, args){
+	
+	var spotify = new SpotifyWebApi();
+	spotify.setAccessToken(tokens.spotifyaccesstoken);
+	
+	
 	return new Promise((resolve,reject) =>{
 		switch(resolveName){
 			case 'searchTracks':

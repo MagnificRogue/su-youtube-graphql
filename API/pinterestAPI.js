@@ -1,7 +1,7 @@
 var request = require('request');
-var config = require('../config');
+require('dotenv').config();
 
-var access_token = config.pinterest.access_token_key;
+var access_token = process.env.PINTEREST_ACCESS_TOKEN;
 
 
 function pinterest(args, fname){

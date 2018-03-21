@@ -1,17 +1,20 @@
 var Promise = require('promise');
-var config = require('../config');
-var tumblr = require('tumblr.js');
-var client = tumblr.createClient({
-	credentials:{
-		consumer_key:		config.tumblr.consumer_key,
-		consumer_secret:	config.tumblr.consumer_secret,
-		token:				config.tumblr.access_token,
-		token_secret:		config.tumblr.access_token_secret
-	},
-	returnPromises:true,
-});
+require('dotenv').config();
 
-function tumblrAPI(resolveName, id, args){
+function tumblrAPI(token, resolveName, id, args){
+	console.log(token);
+	
+	var tumblr = require('tumblr.js');
+	var client = tumblr.createClient({
+		credentials:{
+			consumer_key:		process.env.TUMBLR_CONSUMER_KEY,
+			consumer_secret:	process.env.TUMBLR_CONSUMER_SECRET,
+			token:				token.tumblrtoken,
+			token_secret:		token.tumblrtokensecret
+		},
+		returnPromises:true,
+	});
+	
 	return new Promise((resolve,reject) =>{
 		switch(resolveName){
 			case 'tagged':
