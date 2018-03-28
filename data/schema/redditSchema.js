@@ -20,7 +20,6 @@ const redditQueryType = module.exports = new GraphQLObjectType({
 			},
 			description:'Searches subreddits by topic.Returns An Array of subreddit objects corresponding to the search results',
 			resolve: (_,args,context) => {
-				console.log(context);	
 				return 	redditAPI(context, resolveName='searchSubredditTopics',id='',args=args)
 			}		
 		},
@@ -31,7 +30,6 @@ const redditQueryType = module.exports = new GraphQLObjectType({
 			},
 			description:'Searches subreddits by title and description.Returns A Listing containing Subreddits',
 			resolve: (_,args,context) => {
-				console.log(context)
 				return redditAPI(context, resolveName = 'searchSubreddits', id='',args=args)
 			}	
 		},

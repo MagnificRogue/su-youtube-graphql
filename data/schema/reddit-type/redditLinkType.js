@@ -77,8 +77,12 @@ const redditLinkType = module.exports = new GraphQLObjectType({
 		user_reports:			{type:new GraphQLList(GraphQLString)},
 		visited:				{type:GraphQLBoolean},	
 		/*--------------------------nested------------------------*/
-		replies:				{type:new GraphQLList(redditCommentType),
-									resolve: ({id},_,context) => replyLoader.load( JSON.stringify({'id':id,'token':context['redditaccesstoken']}) )} // @ REFACTOR
+		replies:				{
+											type:new GraphQLList(redditCommentType),
+											resolve: ({id},_,context) => {
+												return replyLoader.load( JSON.stringify({'id':id,'context':context}) )
+											}
+									} // @ REFACTOR
 		/*author_trophy:			{type:new GraphQLList(redditTrophyType),
 									resolve: ({author}) => redditAPI(resolveName='trophy', id=author.name, args={})},
 		author_overview:		{type:new GraphQLList(redditOverviewType),

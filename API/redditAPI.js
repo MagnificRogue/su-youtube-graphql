@@ -20,16 +20,33 @@ function redditAPI(tokens,resolveName, id, args){
 		console.log(resolveName)
 		switch(resolveName){
 			case 'search':
-				args['limit'] = args['count'];
-				r.search(args).then((listing) =>  {
-						console.log(listing);
+				args.limit = args.count;
+
+				/*
+				 * For some reason if the args have a subreddit attribute,
+				 *  snoowrap isn't limiting the search to that subreddit.
+				 *  Below is a workaround, but figuring out why it's happening
+				 *  in the first place should happen.
+				 *  @REFACTOR @EVENTUALLY  @TODO
+				 */
+				if(args.subreddit) {
+					r.getSubreddit(args.subreddit).search(args).then((listing) => {
+						resolve(listing);
+					})
+					.catch((err) => {
+						console.log(err)
+						reject(err)
+					})
+				} else {
+					r.search(args).then((listing) =>  {
 						resolve(listing);
 					})
 					.catch((err) =>{
 						console.log(err);
 						reject(err)
 					})
-				break;
+				}
+			break;
 				
 			case 'getCompleteReplies':
 				r.getSubmission(id).expandReplies({options:{limit:Infinity,depth:Infinity}}).then(data =>  {
@@ -42,7 +59,8 @@ function redditAPI(tokens,resolveName, id, args){
 				break;
 				
 			case 'searchSubreddits':
-				args['limit'] = 1000;
+				args.limit = 1000;
+
 				r.searchSubreddits(args).then((listing) =>  {
 				listing.fetchAll().then((data) =>{
 						resolve(data);
@@ -60,7 +78,7 @@ function redditAPI(tokens,resolveName, id, args){
 				if (args['subredditName'] === 'ALL'){
 					args['subredditName'] = '';
 				}
-				r.getSubreddit(args['subredditName']).getNewComments({limit:1000}).then((listing) =>  {
+				r.getSubreddit(args.subredditName).getNewComments({limit:1000}).then((listing) =>  {
 					listing.fetchMore({amount:args['extra'],skipReplies:false,append:true}).then((data) => {
 						resolve(data);
 					})
@@ -274,7 +292,6 @@ function redditAPI(tokens,resolveName, id, args){
 			case 'upvote':
 				r.getUser(id).getUpvotedContent().then((listing) =>  {
 					listing.fetchMore({amount:args['extra']}).then((data) => {
-						//console.log(data);
 						resolve(data);
 					})
 					.catch((err) =>{
@@ -303,8 +320,6 @@ function redditAPI(tokens,resolveName, id, args){
 			case 'expansion':
 				agg_comments = [];
 				r.getSubmission(id).expandReplies({options:{limit:Infinity,depth:Infinity}}).then(data =>  {
-						
-					//console.log(data.comments.length);
 					for (var i = 0, length=data.comments.length; i< length; i++){
 						commentTreeFlaten(data.comments[i]);
 					}
@@ -315,43 +330,6 @@ function redditAPI(tokens,resolveName, id, args){
 					reject(err);
 				});
 				break;	
-				
-			/*case 'getUserFlairTemplates':
-				r.getSubreddit(id).getUserFlairTemplates().then((data) => {
-						//console.log(data);
-						resolve(data);
-				});
-				break;
-				
-			case 'subreddit_hot':
-				r.getSubreddit(id).getHot().then((listing) =>  {
-					listing.fetchMore({amount:args['extra']}).then((data) => {
-						//console.log(data);
-						resolve(data);
-					})
-				});
-				break;
-				
-			case 'subreddit_new':
-				r.getSubreddit(id).getNew().then((listing) =>  {
-					listing.fetchMore({amount:args['extra']}).then((data) => {
-						//console.log(data);
-						resolve(data);
-					})
-				});
-				break;
-			
-			case 'comment':
-				r.getUser(id).getComments().then((listing) =>  {
-					args['limit'] = 1;
-					listing.fetchMore({amount:0}).then((data) => {
-						resolve(data);
-					})
-					.catch((err) =>{
-						reject(err)
-					})
-				});
-				break;*/
 				
 				
 			default:

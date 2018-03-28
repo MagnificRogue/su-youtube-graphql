@@ -7,22 +7,30 @@ var rootDIR = path.resolve('.');
 
 const replyLoader = new DataLoader(function(ids){
 	
-	const snoowrap = require('snoowrap');
-	r = new snoowrap({
-			userAgent: 	'social monitoring research',
-			accessToken: JSON.parse(ids[0])['token']
+	var context = JSON.parse(ids[0]).context;
+	const redditTokens = context.find((authorization) => {
+		return authorization.provider === 'reddit';
 	});
-	
+
+	const snoowrap = require('snoowrap');
+	const r = new snoowrap({
+			userAgent: 	'social monitoring research',
+			accessToken: redditTokens.access_token,
+			refreshToken: redditTokens.refresh_token,
+			clientId: redditTokens.client.client_id,
+			clientSecret: redditTokens.client.client_secret
+	});
+
 	var promise_array = [];
 	for (var i=0, length=ids.length; i<length; i++){
-		wait(4000); // synchronized block!
-		promise_array.push(getCompleteReplies(ids[i]));
+		// wait(4000); // synchronized block, but why?
+		promise_array.push(getCompleteReplies(ids[i], r));
 	}
 
 	return Promise.all(promise_array);
 });
 
-function getCompleteReplies(id){
+function getCompleteReplies(id, r){
 	//console.log(id);
 	
 	return new Promise((resolve,reject) =>{
