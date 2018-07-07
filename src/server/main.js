@@ -1,9 +1,15 @@
+require('dotenv').config();
 const cors = require('cors');
 const express = require('express');
 const graphqlHTTP = require('express-graphql');
 const youtubeSchema = require('../schema');
 const logger = require('morgan');
 
+
+if (!process.env.CLIENT_ID || !process.env.CLIENT_SECRET || !process.env.CALLBACK) {
+	console.error('Error, Environment is missing a CLIENT_KEY, CLIENT_SECRET, and CALLBACK necessary to access the Twitter API');
+	process.exit(1);
+}
 
 const app = express()
 

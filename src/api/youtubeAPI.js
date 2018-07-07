@@ -1,22 +1,39 @@
 var Promise = require('promise');
 var google = require('googleapis');
 var OAuth2 = google.auth.OAuth2;
-var oauth2Client = new OAuth2();
 
-function youtubeAPI(tokens, resolveName, id, args){
-	
-	oauth2Client.setCredentials({
-	  access_token:'', 
-	  refresh_token:'' 
-		//expiry_date: true
-	});
+var oauth2Client = new OAuth2(
+	process.env.CLIENT_ID,
+	process.env.CLIENT_SECRET,
+	process.env.CALLBACK
+);
 
-	var youtube = google.youtube({
-		version: 'v3',
-		auth:oauth2Client
-	});
-	
+function youtubeAPI(context, resolveName, id, args){
+
+		let authorization = JSON.parse(context.headers.authorization)
+
 	return new Promise((resolve,reject) =>{
+
+		let unauthorized =  !authorization || !authorization.accessToken
+							|| !authorization.refreshToken;
+							
+		
+		if (unauthorized) {
+			reject(new Error('Unauthorized Request'));
+		}
+
+
+		oauth2Client.setCredentials({
+		  access_token: authorization.accessToken,
+		  refresh_token: authorization.refreshToken
+			//expiry_date: true
+		});
+
+		var youtube = google.youtube({
+			version: 'v3',
+			auth:oauth2Client
+		});
+	
 		
 		switch(resolveName){
 			case 'search':
@@ -34,7 +51,6 @@ function youtubeAPI(tokens, resolveName, id, args){
 						console.log(error);
 						reject(error);
 					}else{
-						//console.log(data);
 						resolve(data.items);
 					}
 				  });
