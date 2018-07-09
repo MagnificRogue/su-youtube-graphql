@@ -4,6 +4,7 @@ const express = require('express');
 const graphqlHTTP = require('express-graphql');
 const youtubeSchema = require('../schema');
 const logger = require('morgan');
+const bodyParser = require('body-parser');
 
 
 if (!process.env.CLIENT_ID || !process.env.CLIENT_SECRET || !process.env.CALLBACK) {
